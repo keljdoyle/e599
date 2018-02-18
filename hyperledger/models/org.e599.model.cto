@@ -1,0 +1,53 @@
+/**
+ * Model file for Pharmaceuticals provenance
+ */
+namespace org.e599.model
+
+asset Product identified by productId {
+  	o String productId
+    o String productName
+	  --> SupplyChainPartner manufacturer
+}
+
+/* a parcel, pallet, or shipping container */
+asset Container identified by gtin {
+  	o String gtin
+    --> Location currentLocation
+    --> IndividualPackage[] packages
+}
+
+asset IndividualPackage identified by gtin {
+    o String gtin
+    --> Product product
+}
+
+asset Location identified by gln {
+    o String gln
+    o String address
+	  --> SupplyChainPartner company
+}
+
+asset Shipment identified by sscc {
+  o String sscc
+  --> Container container
+  --> Location sendFrom
+  --> Location sendTo
+}
+
+participant SupplyChainPartner identified by partnerId {
+    o String partnerId
+    o String companyName
+}
+
+participant Shipper identified by shipperId {
+    o String shipperId
+    o String companyName
+}
+
+transaction Delivery {
+    --> Shipment shipment
+}
+
+event ShipmentNotification {
+    --> Shipment shipment
+}

@@ -1,0 +1,6 @@
+query selectProductByName {
+  description: "Find a product by name."
+  statement:
+      SELECT org.e599.model.Product
+          WHERE (productName == _$productName)
+}
