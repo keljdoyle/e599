@@ -4,3 +4,10 @@ query selectProductByName {
       SELECT org.e599.model.Product
           WHERE (productName == _$productName)
 }
+
+query selectDeliveryByGTIN {
+  description: "Find deliveries by package identifier."
+  statement:
+      SELECT org.e599.model.ProofOfDelivery
+          WHERE (gtin == _$gtin)
+}

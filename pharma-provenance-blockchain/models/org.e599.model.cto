@@ -3,6 +3,14 @@
  */
 namespace org.e599.model
 
+asset Batch identified by batchId {
+  o String batchId
+  o DateTime batchDate optional
+  o DateTime expirationDate optional
+  --> Location manufactureLocation
+  --> Product product
+}
+
 asset Product identified by productId {
   	o String productId
     o String productName
@@ -13,12 +21,16 @@ asset Product identified by productId {
 asset Container identified by gtin {
   	o String gtin
     --> Location currentLocation
-    --> IndividualPackage[] packages
+    --> IndividualPackage[] packages optional
 }
 
 asset IndividualPackage identified by gtin {
     o String gtin
+    o Long unitCount
+    o Long dosage
+    o String unit
     --> Product product
+    --> Batch batch
 }
 
 asset Location identified by gln {
@@ -44,8 +56,30 @@ participant Shipper identified by shipperId {
     o String companyName
 }
 
-transaction Delivery {
+/**
+  I'm not sure this is a best practice, but we want to be able to search for delivery history for a GTIN...
+  and there doesnt appear to be a way to quickly join data in Hyperledger queries....
+  so every shipment received will create a record that will 'flatten' the data that we want to query. 
+ */
+asset ProofOfDelivery identified by sscc {
+  o String sscc
+  o String gtin
+  o String gln
+}
+
+/**
+  This transaction is executed when a container is received.
+ */
+transaction DeliveryTransaction {
     --> Shipment shipment
+}
+
+/**
+  This transaction is executed when individual packages are added to a container.
+ */
+transaction PackageTransaction {
+    --> Container container
+    --> IndividualPackage[] contents
 }
 
 event ShipmentNotification {
