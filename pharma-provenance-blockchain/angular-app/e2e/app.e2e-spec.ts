@@ -21,6 +21,20 @@ describe('Starting tests for angular-app', function() {
   });
 
   
+    it('Batch component should be loadable',() => {
+      page.navigateTo('/Batch');
+      var assetName = browser.findElement(by.id('assetName'));
+      expect(assetName.getText()).toBe('Batch');
+    });
+
+    it('Batch table should have 6 columns',() => {
+      page.navigateTo('/Batch');
+      element.all(by.css('.thead-cols th')).then(function(arr) {
+        expect(arr.length).toEqual(6); // Addition of 1 for 'Action' column
+      });
+    });
+
+  
     it('Product component should be loadable',() => {
       page.navigateTo('/Product');
       var assetName = browser.findElement(by.id('assetName'));
@@ -55,10 +69,10 @@ describe('Starting tests for angular-app', function() {
       expect(assetName.getText()).toBe('IndividualPackage');
     });
 
-    it('IndividualPackage table should have 3 columns',() => {
+    it('IndividualPackage table should have 7 columns',() => {
       page.navigateTo('/IndividualPackage');
       element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(3); // Addition of 1 for 'Action' column
+        expect(arr.length).toEqual(7); // Addition of 1 for 'Action' column
       });
     });
 
@@ -83,10 +97,38 @@ describe('Starting tests for angular-app', function() {
       expect(assetName.getText()).toBe('Shipment');
     });
 
-    it('Shipment table should have 5 columns',() => {
+    it('Shipment table should have 6 columns',() => {
       page.navigateTo('/Shipment');
       element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(5); // Addition of 1 for 'Action' column
+        expect(arr.length).toEqual(6); // Addition of 1 for 'Action' column
+      });
+    });
+
+  
+    it('GoodsIssued component should be loadable',() => {
+      page.navigateTo('/GoodsIssued');
+      var assetName = browser.findElement(by.id('assetName'));
+      expect(assetName.getText()).toBe('GoodsIssued');
+    });
+
+    it('GoodsIssued table should have 4 columns',() => {
+      page.navigateTo('/GoodsIssued');
+      element.all(by.css('.thead-cols th')).then(function(arr) {
+        expect(arr.length).toEqual(4); // Addition of 1 for 'Action' column
+      });
+    });
+
+  
+    it('GoodsReceived component should be loadable',() => {
+      page.navigateTo('/GoodsReceived');
+      var assetName = browser.findElement(by.id('assetName'));
+      expect(assetName.getText()).toBe('GoodsReceived');
+    });
+
+    it('GoodsReceived table should have 4 columns',() => {
+      page.navigateTo('/GoodsReceived');
+      element.all(by.css('.thead-cols th')).then(function(arr) {
+        expect(arr.length).toEqual(4); // Addition of 1 for 'Action' column
       });
     });
 

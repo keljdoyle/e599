@@ -23,7 +23,23 @@ export class IndividualPackageComponent implements OnInit {
         
   
       
+          unitCount = new FormControl("", Validators.required);
+        
+  
+      
+          dosage = new FormControl("", Validators.required);
+        
+  
+      
+          unit = new FormControl("", Validators.required);
+        
+  
+      
           product = new FormControl("", Validators.required);
+        
+  
+      
+          batch = new FormControl("", Validators.required);
         
   
 
@@ -36,7 +52,23 @@ export class IndividualPackageComponent implements OnInit {
         
     
         
-          product:this.product
+          unitCount:this.unitCount,
+        
+    
+        
+          dosage:this.dosage,
+        
+    
+        
+          unit:this.unit,
+        
+    
+        
+          product:this.product,
+        
+    
+        
+          batch:this.batch
         
     
     });
@@ -104,7 +136,23 @@ export class IndividualPackageComponent implements OnInit {
         
       
         
-          "product":this.product.value
+          "unitCount":this.unitCount.value,
+        
+      
+        
+          "dosage":this.dosage.value,
+        
+      
+        
+          "unit":this.unit.value,
+        
+      
+        
+          "product":this.product.value,
+        
+      
+        
+          "batch":this.batch.value
         
       
     };
@@ -116,7 +164,23 @@ export class IndividualPackageComponent implements OnInit {
         
       
         
-          "product":null
+          "unitCount":null,
+        
+      
+        
+          "dosage":null,
+        
+      
+        
+          "unit":null,
+        
+      
+        
+          "product":null,
+        
+      
+        
+          "batch":null
         
       
     });
@@ -132,7 +196,23 @@ export class IndividualPackageComponent implements OnInit {
         
       
         
-          "product":null 
+          "unitCount":null,
+        
+      
+        
+          "dosage":null,
+        
+      
+        
+          "unit":null,
+        
+      
+        
+          "product":null,
+        
+      
+        
+          "batch":null 
         
       
       });
@@ -158,7 +238,31 @@ export class IndividualPackageComponent implements OnInit {
     
         
           
-            "product":this.product.value
+            "unitCount":this.unitCount.value,
+          
+        
+    
+        
+          
+            "dosage":this.dosage.value,
+          
+        
+    
+        
+          
+            "unit":this.unit.value,
+          
+        
+    
+        
+          
+            "product":this.product.value,
+          
+        
+    
+        
+          
+            "batch":this.batch.value
           
         
     
@@ -220,7 +324,23 @@ export class IndividualPackageComponent implements OnInit {
           
         
           
-            "product":null 
+            "unitCount":null,
+          
+        
+          
+            "dosage":null,
+          
+        
+          
+            "unit":null,
+          
+        
+          
+            "product":null,
+          
+        
+          
+            "batch":null 
           
         
       };
@@ -236,12 +356,44 @@ export class IndividualPackageComponent implements OnInit {
           formObject.gtin = null;
         }
       
+        if(result.unitCount){
+          
+            formObject.unitCount = result.unitCount;
+          
+        }else{
+          formObject.unitCount = null;
+        }
+      
+        if(result.dosage){
+          
+            formObject.dosage = result.dosage;
+          
+        }else{
+          formObject.dosage = null;
+        }
+      
+        if(result.unit){
+          
+            formObject.unit = result.unit;
+          
+        }else{
+          formObject.unit = null;
+        }
+      
         if(result.product){
           
             formObject.product = result.product;
           
         }else{
           formObject.product = null;
+        }
+      
+        if(result.batch){
+          
+            formObject.batch = result.batch;
+          
+        }else{
+          formObject.batch = null;
         }
       
 
@@ -270,7 +422,23 @@ export class IndividualPackageComponent implements OnInit {
         
       
         
-          "product":null 
+          "unitCount":null,
+        
+      
+        
+          "dosage":null,
+        
+      
+        
+          "unit":null,
+        
+      
+        
+          "product":null,
+        
+      
+        
+          "batch":null 
         
       
       });

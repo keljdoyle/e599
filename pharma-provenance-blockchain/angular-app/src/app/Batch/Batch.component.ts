@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ShipmentService } from './Shipment.service';
+import { BatchService } from './Batch.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
-	selector: 'app-Shipment',
-	templateUrl: './Shipment.component.html',
-	styleUrls: ['./Shipment.component.css'],
-  providers: [ShipmentService]
+	selector: 'app-Batch',
+	templateUrl: './Batch.component.html',
+	styleUrls: ['./Batch.component.css'],
+  providers: [BatchService]
 })
-export class ShipmentComponent implements OnInit {
+export class BatchComponent implements OnInit {
 
   myForm: FormGroup;
 
@@ -19,36 +19,50 @@ export class ShipmentComponent implements OnInit {
 
   
       
-          sscc = new FormControl("", Validators.required);
+          batchId = new FormControl("", Validators.required);
         
   
       
-          container = new FormControl("", Validators.required);
+          batchDate = new FormControl("", Validators.required);
         
   
       
-          sendFrom = new FormControl("", Validators.required);
+          expirationDate = new FormControl("", Validators.required);
         
   
       
-          sendTo = new FormControl("", Validators.required);
+          manufactureLocation = new FormControl("", Validators.required);
         
   
       
-          shipper = new FormControl("", Validators.required);
+          product = new FormControl("", Validators.required);
         
   
 
 
-  constructor(private serviceShipment:ShipmentService, fb: FormBuilder) {
+  constructor(private serviceBatch:BatchService, fb: FormBuilder) {
     this.myForm = fb.group({
     
-          sscc:this.sscc,
-          container:this.container,
-          sendFrom:this.sendFrom,
-          sendTo:this.sendTo,
-          shipper:this.shipper
         
+          batchId:this.batchId,
+        
+    
+        
+          batchDate:this.batchDate,
+        
+    
+        
+          expirationDate:this.expirationDate,
+        
+    
+        
+          manufactureLocation:this.manufactureLocation,
+        
+    
+        
+          product:this.product
+        
+    
     });
   };
 
@@ -58,7 +72,7 @@ export class ShipmentComponent implements OnInit {
 
   loadAll(): Promise<any> {
     let tempList = [];
-    return this.serviceShipment.getAll()
+    return this.serviceBatch.getAll()
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
@@ -107,26 +121,26 @@ export class ShipmentComponent implements OnInit {
 
   addAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.Shipment",
+      $class: "org.e599.model.Batch",
       
         
-          "sscc":this.sscc.value,
-        
-      
-        
-          "container":this.container.value,
+          "batchId":this.batchId.value,
         
       
         
-          "sendFrom":this.sendFrom.value,
+          "batchDate":this.batchDate.value,
         
       
         
-          "sendTo":this.sendTo.value,
+          "expirationDate":this.expirationDate.value,
         
       
         
-          "shipper":this.shipper.value
+          "manufactureLocation":this.manufactureLocation.value,
+        
+      
+        
+          "product":this.product.value
         
       
     };
@@ -134,51 +148,51 @@ export class ShipmentComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "sscc":null,
+          "batchId":null,
         
       
         
-          "container":null,
+          "batchDate":null,
         
       
         
-          "sendFrom":null,
+          "expirationDate":null,
         
       
         
-          "sendTo":null,
+          "manufactureLocation":null,
         
       
         
-          "shipper":null
+          "product":null
         
       
     });
 
-    return this.serviceShipment.addAsset(this.asset)
+    return this.serviceBatch.addAsset(this.asset)
     .toPromise()
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
       
         
-          "sscc":null,
+          "batchId":null,
         
       
         
-          "container":null,
+          "batchDate":null,
         
       
         
-          "sendFrom":null,
+          "expirationDate":null,
         
       
         
-          "sendTo":null,
+          "manufactureLocation":null,
         
       
         
-          "shipper":null 
+          "product":null 
         
       
       });
@@ -196,7 +210,7 @@ export class ShipmentComponent implements OnInit {
 
    updateAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.Shipment",
+      $class: "org.e599.model.Batch",
       
         
           
@@ -204,31 +218,31 @@ export class ShipmentComponent implements OnInit {
     
         
           
-            "container":this.container.value,
+            "batchDate":this.batchDate.value,
           
         
     
         
           
-            "sendFrom":this.sendFrom.value,
+            "expirationDate":this.expirationDate.value,
           
         
     
         
           
-            "sendTo":this.sendTo.value,
+            "manufactureLocation":this.manufactureLocation.value,
           
         
     
         
           
-            "shipper":this.shipper.value
+            "product":this.product.value
           
         
     
     };
 
-    return this.serviceShipment.updateAsset(form.get("sscc").value,this.asset)
+    return this.serviceBatch.updateAsset(form.get("batchId").value,this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -249,7 +263,7 @@ export class ShipmentComponent implements OnInit {
 
   deleteAsset(): Promise<any> {
 
-    return this.serviceShipment.deleteAsset(this.currentId)
+    return this.serviceBatch.deleteAsset(this.currentId)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -273,30 +287,30 @@ export class ShipmentComponent implements OnInit {
 
   getForm(id: any): Promise<any>{
 
-    return this.serviceShipment.getAsset(id)
+    return this.serviceBatch.getAsset(id)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
         
           
-            "sscc":null,
+            "batchId":null,
           
         
           
-            "container":null,
+            "batchDate":null,
           
         
           
-            "sendFrom":null,
+            "expirationDate":null,
           
         
           
-            "sendTo":null,
+            "manufactureLocation":null,
           
         
           
-            "shipper":null 
+            "product":null 
           
         
       };
@@ -304,44 +318,44 @@ export class ShipmentComponent implements OnInit {
 
 
       
-        if(result.sscc){
+        if(result.batchId){
           
-            formObject.sscc = result.sscc;
+            formObject.batchId = result.batchId;
           
         }else{
-          formObject.sscc = null;
+          formObject.batchId = null;
         }
       
-        if(result.container){
+        if(result.batchDate){
           
-            formObject.container = result.container;
+            formObject.batchDate = result.batchDate;
           
         }else{
-          formObject.container = null;
+          formObject.batchDate = null;
         }
       
-        if(result.sendFrom){
+        if(result.expirationDate){
           
-            formObject.sendFrom = result.sendFrom;
+            formObject.expirationDate = result.expirationDate;
           
         }else{
-          formObject.sendFrom = null;
+          formObject.expirationDate = null;
         }
       
-        if(result.sendTo){
+        if(result.manufactureLocation){
           
-            formObject.sendTo = result.sendTo;
+            formObject.manufactureLocation = result.manufactureLocation;
           
         }else{
-          formObject.sendTo = null;
+          formObject.manufactureLocation = null;
         }
       
-        if(result.shipper){
+        if(result.product){
           
-            formObject.shipper = result.shipper;
+            formObject.product = result.product;
           
         }else{
-          formObject.shipper = null;
+          formObject.product = null;
         }
       
 
@@ -366,23 +380,23 @@ export class ShipmentComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "sscc":null,
+          "batchId":null,
         
       
         
-          "container":null,
+          "batchDate":null,
         
       
         
-          "sendFrom":null,
+          "expirationDate":null,
         
       
         
-          "sendTo":null,
+          "manufactureLocation":null,
         
       
         
-          "shipper":null 
+          "product":null 
         
       
       });

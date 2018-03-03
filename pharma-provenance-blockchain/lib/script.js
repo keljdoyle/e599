@@ -26,13 +26,13 @@ function receivePackage(delivery) {
 
     delivery.shipment.container.currentLocation = delivery.shipment.sendTo;
     
-    var pod = factory.newResource('org.e599.model', 'ProofOfDelivery', delivery.shipment.sscc);
-    pod.gtin = delivery.shipment.container.gtin;
-    pod.gln = delivery.shipment.sendTo.gln;
+    var receipt = factory.newResource('org.e599.model', 'GoodsReceived', delivery.shipment.sscc);
+    receipt.gtin = delivery.shipment.container.gtin;
+    receipt.gln = delivery.shipment.sendTo.gln;
 
-    getAssetRegistry('org.e599.model.ProofOfDelivery')
+    getAssetRegistry('org.e599.model.GoodsReceived')
         .then(function (assetRegistry) {
-            assetRegistry.add(pod);
+            assetRegistry.add(receipt);
         });
 
     return getAssetRegistry('org.e599.model.Container')

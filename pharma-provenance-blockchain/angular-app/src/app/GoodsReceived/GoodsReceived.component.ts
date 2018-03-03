@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ShipmentService } from './Shipment.service';
+import { GoodsReceivedService } from './GoodsReceived.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
-	selector: 'app-Shipment',
-	templateUrl: './Shipment.component.html',
-	styleUrls: ['./Shipment.component.css'],
-  providers: [ShipmentService]
+	selector: 'app-GoodsReceived',
+	templateUrl: './GoodsReceived.component.html',
+	styleUrls: ['./GoodsReceived.component.css'],
+  providers: [GoodsReceivedService]
 })
-export class ShipmentComponent implements OnInit {
+export class GoodsReceivedComponent implements OnInit {
 
   myForm: FormGroup;
 
@@ -23,32 +23,30 @@ export class ShipmentComponent implements OnInit {
         
   
       
-          container = new FormControl("", Validators.required);
+          gtin = new FormControl("", Validators.required);
         
   
       
-          sendFrom = new FormControl("", Validators.required);
-        
-  
-      
-          sendTo = new FormControl("", Validators.required);
-        
-  
-      
-          shipper = new FormControl("", Validators.required);
+          gln = new FormControl("", Validators.required);
         
   
 
 
-  constructor(private serviceShipment:ShipmentService, fb: FormBuilder) {
+  constructor(private serviceGoodsReceived:GoodsReceivedService, fb: FormBuilder) {
     this.myForm = fb.group({
     
-          sscc:this.sscc,
-          container:this.container,
-          sendFrom:this.sendFrom,
-          sendTo:this.sendTo,
-          shipper:this.shipper
         
+          sscc:this.sscc,
+        
+    
+        
+          gtin:this.gtin,
+        
+    
+        
+          gln:this.gln
+        
+    
     });
   };
 
@@ -58,7 +56,7 @@ export class ShipmentComponent implements OnInit {
 
   loadAll(): Promise<any> {
     let tempList = [];
-    return this.serviceShipment.getAll()
+    return this.serviceGoodsReceived.getAll()
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
@@ -107,26 +105,18 @@ export class ShipmentComponent implements OnInit {
 
   addAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.Shipment",
+      $class: "org.e599.model.GoodsReceived",
       
         
           "sscc":this.sscc.value,
         
       
         
-          "container":this.container.value,
+          "gtin":this.gtin.value,
         
       
         
-          "sendFrom":this.sendFrom.value,
-        
-      
-        
-          "sendTo":this.sendTo.value,
-        
-      
-        
-          "shipper":this.shipper.value
+          "gln":this.gln.value
         
       
     };
@@ -138,24 +128,16 @@ export class ShipmentComponent implements OnInit {
         
       
         
-          "container":null,
+          "gtin":null,
         
       
         
-          "sendFrom":null,
-        
-      
-        
-          "sendTo":null,
-        
-      
-        
-          "shipper":null
+          "gln":null
         
       
     });
 
-    return this.serviceShipment.addAsset(this.asset)
+    return this.serviceGoodsReceived.addAsset(this.asset)
     .toPromise()
     .then(() => {
 			this.errorMessage = null;
@@ -166,19 +148,11 @@ export class ShipmentComponent implements OnInit {
         
       
         
-          "container":null,
+          "gtin":null,
         
       
         
-          "sendFrom":null,
-        
-      
-        
-          "sendTo":null,
-        
-      
-        
-          "shipper":null 
+          "gln":null 
         
       
       });
@@ -196,7 +170,7 @@ export class ShipmentComponent implements OnInit {
 
    updateAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.Shipment",
+      $class: "org.e599.model.GoodsReceived",
       
         
           
@@ -204,31 +178,19 @@ export class ShipmentComponent implements OnInit {
     
         
           
-            "container":this.container.value,
+            "gtin":this.gtin.value,
           
         
     
         
           
-            "sendFrom":this.sendFrom.value,
-          
-        
-    
-        
-          
-            "sendTo":this.sendTo.value,
-          
-        
-    
-        
-          
-            "shipper":this.shipper.value
+            "gln":this.gln.value
           
         
     
     };
 
-    return this.serviceShipment.updateAsset(form.get("sscc").value,this.asset)
+    return this.serviceGoodsReceived.updateAsset(form.get("sscc").value,this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -249,7 +211,7 @@ export class ShipmentComponent implements OnInit {
 
   deleteAsset(): Promise<any> {
 
-    return this.serviceShipment.deleteAsset(this.currentId)
+    return this.serviceGoodsReceived.deleteAsset(this.currentId)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -273,7 +235,7 @@ export class ShipmentComponent implements OnInit {
 
   getForm(id: any): Promise<any>{
 
-    return this.serviceShipment.getAsset(id)
+    return this.serviceGoodsReceived.getAsset(id)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
@@ -284,19 +246,11 @@ export class ShipmentComponent implements OnInit {
           
         
           
-            "container":null,
+            "gtin":null,
           
         
           
-            "sendFrom":null,
-          
-        
-          
-            "sendTo":null,
-          
-        
-          
-            "shipper":null 
+            "gln":null 
           
         
       };
@@ -312,36 +266,20 @@ export class ShipmentComponent implements OnInit {
           formObject.sscc = null;
         }
       
-        if(result.container){
+        if(result.gtin){
           
-            formObject.container = result.container;
+            formObject.gtin = result.gtin;
           
         }else{
-          formObject.container = null;
+          formObject.gtin = null;
         }
       
-        if(result.sendFrom){
+        if(result.gln){
           
-            formObject.sendFrom = result.sendFrom;
-          
-        }else{
-          formObject.sendFrom = null;
-        }
-      
-        if(result.sendTo){
-          
-            formObject.sendTo = result.sendTo;
+            formObject.gln = result.gln;
           
         }else{
-          formObject.sendTo = null;
-        }
-      
-        if(result.shipper){
-          
-            formObject.shipper = result.shipper;
-          
-        }else{
-          formObject.shipper = null;
+          formObject.gln = null;
         }
       
 
@@ -370,19 +308,11 @@ export class ShipmentComponent implements OnInit {
         
       
         
-          "container":null,
+          "gtin":null,
         
       
         
-          "sendFrom":null,
-        
-      
-        
-          "sendTo":null,
-        
-      
-        
-          "shipper":null 
+          "gln":null 
         
       
       });

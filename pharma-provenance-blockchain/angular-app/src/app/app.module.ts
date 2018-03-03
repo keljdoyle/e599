@@ -9,23 +9,29 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 // import { TransactionComponent } from './Transaction/Transaction.component'
 
+import { BatchComponent } from './Batch/Batch.component';
 import { ProductComponent } from './Product/Product.component';
 import { ContainerComponent } from './Container/Container.component';
 import { IndividualPackageComponent } from './IndividualPackage/IndividualPackage.component';
 import { LocationComponent } from './Location/Location.component';
 import { ShipmentComponent } from './Shipment/Shipment.component';
+import { GoodsIssuedComponent } from './GoodsIssued/GoodsIssued.component';
+import { GoodsReceivedComponent } from './GoodsReceived/GoodsReceived.component';
 
 @NgModule({
   declarations: [
     AppComponent,
 		HomeComponent,
     // TransactionComponent,
-    ProductComponent,
+    BatchComponent,
+		ProductComponent,
 		ContainerComponent,
 		IndividualPackageComponent,
 		LocationComponent,
+		ShipmentComponent,
+		GoodsIssuedComponent,
 		
-    ShipmentComponent
+    GoodsReceivedComponent
 		
   ],
   imports: [

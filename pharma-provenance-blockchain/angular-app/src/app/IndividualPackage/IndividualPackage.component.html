@@ -23,9 +23,49 @@
 
             
               <div class="form-group text-left">
+                <label for="unitCount">unitCount</label>
+                
+                  <input formControlName="unitCount" type="number" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="dosage">dosage</label>
+                
+                  <input formControlName="dosage" type="number" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="unit">unit</label>
+                
+                  <input formControlName="unit" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
                 <label for="product">product</label>
                 
                     <textarea formControlName="product" class="form-control" rows="3"></textarea>
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="batch">batch</label>
+                
+                    <textarea formControlName="batch" class="form-control" rows="3"></textarea>
                 
               </div>
             
@@ -66,11 +106,49 @@
             </div>
           
             <div class="form-group text-left">
+              <label for="unitCount">unitCount</label>
+
+              
+                <input [ngModel]="unitCount" formControlName="unitCount" type="number" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="dosage">dosage</label>
+
+              
+                <input [ngModel]="dosage" formControlName="dosage" type="number" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="unit">unit</label>
+
+              
+                <input [ngModel]="unit"formControlName="unit" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
               <label for="product">product</label>
 
               
                 
                   <textarea [ngModel]="product" formControlName="product" class="form-control" rows="3"></textarea>
+                
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="batch">batch</label>
+
+              
+                
+                  <textarea [ngModel]="batch" formControlName="batch" class="form-control" rows="3"></textarea>
                 
               
 
@@ -139,7 +217,15 @@
             
                 <th class="info">gtin</th>
             
+                <th class="info">unitCount</th>
+            
+                <th class="info">dosage</th>
+            
+                <th class="info">unit</th>
+            
                 <th class="info">product</th>
+            
+                <th class="info">batch</th>
             
               <th class="info">Actions</th>
           </tr>
@@ -150,7 +236,15 @@
             
                 <td>{{asset.gtin}}</td>
             
+                <td>{{asset.unitCount}}</td>
+            
+                <td>{{asset.dosage}}</td>
+            
+                <td>{{asset.unit}}</td>
+            
                 <td>{{asset.product}}</td>
+            
+                <td>{{asset.batch}}</td>
             
             <td>
               <button (click)="getForm(asset.gtin);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>

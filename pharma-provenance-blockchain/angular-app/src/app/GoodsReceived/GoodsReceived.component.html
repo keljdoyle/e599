@@ -23,19 +23,9 @@
 
             
               <div class="form-group text-left">
-                <label for="container">container</label>
+                <label for="gtin">gtin</label>
                 
-                    <textarea formControlName="container" class="form-control" rows="3"></textarea>
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="sendFrom">sendFrom</label>
-                
-                    <textarea formControlName="sendFrom" class="form-control" rows="3"></textarea>
+                  <input formControlName="gtin" type="text" class="form-control">
                 
               </div>
             
@@ -43,19 +33,9 @@
 
             
               <div class="form-group text-left">
-                <label for="sendTo">sendTo</label>
+                <label for="gln">gln</label>
                 
-                    <textarea formControlName="sendTo" class="form-control" rows="3"></textarea>
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="shipper">shipper</label>
-                
-                    <textarea formControlName="shipper" class="form-control" rows="3"></textarea>
+                  <input formControlName="gln" type="text" class="form-control">
                 
               </div>
             
@@ -96,45 +76,19 @@
             </div>
           
             <div class="form-group text-left">
-              <label for="container">container</label>
+              <label for="gtin">gtin</label>
 
               
-                
-                  <textarea [ngModel]="container" formControlName="container" class="form-control" rows="3"></textarea>
-                
+                <input [ngModel]="gtin"formControlName="gtin" type="text" class="form-control">
               
 
             </div>
           
             <div class="form-group text-left">
-              <label for="sendFrom">sendFrom</label>
+              <label for="gln">gln</label>
 
               
-                
-                  <textarea [ngModel]="sendFrom" formControlName="sendFrom" class="form-control" rows="3"></textarea>
-                
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="sendTo">sendTo</label>
-
-              
-                
-                  <textarea [ngModel]="sendTo" formControlName="sendTo" class="form-control" rows="3"></textarea>
-                
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="shipper">shipper</label>
-
-              
-                
-                  <textarea [ngModel]="shipper" formControlName="shipper" class="form-control" rows="3"></textarea>
-                
+                <input [ngModel]="gln"formControlName="gln" type="text" class="form-control">
               
 
             </div>
@@ -187,7 +141,7 @@
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<strong>Error:</strong> {{errorMessage}}
 	</div>
-  <h1 id='assetName'>Shipment</h1>
+  <h1 id='assetName'>Goods Received</h1>
   <div class="row">
     <div class="col-md-12 text-right">
       <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Asset</button>
@@ -202,13 +156,9 @@
             
                 <th class="info">sscc</th>
             
-                <th class="info">container</th>
+                <th class="info">gtin</th>
             
-                <th class="info">sendFrom</th>
-            
-                <th class="info">sendTo</th>
-            
-                <th class="info">shipper</th>
+                <th class="info">gln</th>
             
               <th class="info">Actions</th>
           </tr>
@@ -219,13 +169,9 @@
             
                 <td>{{asset.sscc}}</td>
             
-                <td>{{asset.container}}</td>
+                <td>{{asset.gtin}}</td>
             
-                <td>{{asset.sendFrom}}</td>
-            
-                <td>{{asset.sendTo}}</td>
-            
-                <td>{{asset.shipper}}</td>
+                <td>{{asset.gln}}</td>
             
             <td>
               <button (click)="getForm(asset.sscc);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>

@@ -44,6 +44,7 @@ asset Shipment identified by sscc {
   --> Container container
   --> Location sendFrom
   --> Location sendTo
+  --> SupplyChainPartner shipper
 }
 
 participant SupplyChainPartner identified by partnerId {
@@ -51,17 +52,20 @@ participant SupplyChainPartner identified by partnerId {
     o String companyName
 }
 
-participant Shipper identified by shipperId {
-    o String shipperId
-    o String companyName
-}
 
 /**
-  I'm not sure this is a best practice, but we want to be able to search for delivery history for a GTIN...
-  and there doesnt appear to be a way to quickly join data in Hyperledger queries....
+  The GoodsIssued/Received assets are created when a Shipment is received.
+  This allows us to search for delivery history for a GTIN,
+  as there doesnt appear to be a way to quickly join data in Hyperledger queries....
   so every shipment received will create a record that will 'flatten' the data that we want to query. 
  */
-asset ProofOfDelivery identified by sscc {
+ asset GoodsIssued identified by sscc {
+  o String sscc
+  o String gtin
+  o String gln
+}
+
+asset GoodsReceived identified by sscc {
   o String sscc
   o String gtin
   o String gln

@@ -1,4 +1,6 @@
 
+
+
 # Add partners
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{  
    "$class": "org.e599.model.SupplyChainPartner",  
@@ -22,6 +24,13 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
    "$class": "org.e599.model.SupplyChainPartner",  
    "partnerId": "4",  
    "companyName": "Pharma Repackaging Ltd"  
+ }' 'http://localhost:3000/api/SupplyChainPartner'
+
+# Currently defining a shipper as a supply chain partner.
+ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{  
+   "$class": "org.e599.model.SupplyChainPartner",  
+   "partnerId": "5",  
+   "companyName": "BFD Shippers"  
  }' 'http://localhost:3000/api/SupplyChainPartner'
 
  # Add products
@@ -139,7 +148,8 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "sscc": "SSCC-1111",
   "container": "org.e599.model.Container#gtin-cont-1",
   "sendFrom": "org.e599.model.Location#gln2222",
-  "sendTo": "org.e599.model.Location#gln3333"
+  "sendTo": "org.e599.model.Location#gln3333",
+  "shipper" : "org.e599.model.SupplyChainPartner#5"
 }' 'http://localhost:3000/api/Shipment'
 
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
@@ -147,7 +157,8 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "sscc": "SSCC-1112",
   "container": "org.e599.model.Container#gtin-cont-1",
   "sendFrom": "org.e599.model.Location#gln3333",
-  "sendTo": "org.e599.model.Location#gln4444"
+  "sendTo": "org.e599.model.Location#gln4444",
+  "shipper" : "org.e599.model.SupplyChainPartner#5"
 }' 'http://localhost:3000/api/Shipment'
 
 
