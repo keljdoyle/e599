@@ -9,13 +9,16 @@ composer archive create -t dir -n .
 composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName pharma-provenance-blockchain
 
 # Deploy the archive file.
+# Run this from the project root folder.
 composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile pharma-provenance-blockchain@0.0.1.bna --file networkadmin.card
 
 
 # PING business network to see if it is running.
 composer network ping --card admin@pharma-provenance-blockchain
 
-# GENERATE REST server...you will be prompted for admin card: admin@pharma-provenance-blockchain
+# GENERATE REST server...you will be prompted for admin card: 
+# admin@pharma-provenance-blockchain
 # You will be prompted for other options, select NO for namespaces.
 # Other options select defaults.
-composer-rest-server
+# composer-rest-server
+

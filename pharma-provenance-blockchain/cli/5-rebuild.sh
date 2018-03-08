@@ -6,3 +6,6 @@ composer network update -a pharma-provenance-blockchain@0.0.1.bna -c admin@pharm
 
 # Re-start the REST server.
 composer-rest-server -c admin@pharma-provenance-blockchain -n never -w true
+
+# Listen for events on rest service web sockets connection
+wscat -c ws://localhost:3000

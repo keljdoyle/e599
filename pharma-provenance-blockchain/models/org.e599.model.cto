@@ -22,6 +22,7 @@ asset Container identified by gtin {
   	o String gtin
     --> Location currentLocation
     --> IndividualPackage[] packages optional
+    --> Product product optional
 }
 
 asset IndividualPackage identified by gtin {
@@ -54,27 +55,34 @@ participant SupplyChainPartner identified by partnerId {
 
 
 /**
-  The GoodsIssued/Received assets are created when a Shipment is received.
+  The VisibilityRecord assets are created to store searchable records of the supply chain lifecycle.
   This allows us to search for delivery history for a GTIN,
   as there doesnt appear to be a way to quickly join data in Hyperledger queries....
-  so every shipment received will create a record that will 'flatten' the data that we want to query. 
+  so every transaction will create a record that will 'flatten' the data that we want to query. 
  */
- asset GoodsIssued identified by sscc {
+asset VisibilityRecord identified by transactionId {
+  o String transactionId
   o String sscc
   o String gtin
   o String gln
+  o String eventType
+  o String businessStep
+  o String action
+  o String disposition
+  o DateTime eventTime
 }
 
-asset GoodsReceived identified by sscc {
-  o String sscc
-  o String gtin
-  o String gln
+/**
+  This transaction is executed when a container is shipped.
+ */
+transaction ShipTransaction {
+    --> Shipment shipment
 }
 
 /**
   This transaction is executed when a container is received.
  */
-transaction DeliveryTransaction {
+transaction ReceiveTransaction {
     --> Shipment shipment
 }
 
@@ -86,6 +94,6 @@ transaction PackageTransaction {
     --> IndividualPackage[] contents
 }
 
-event ShipmentNotification {
-    --> Shipment shipment
+event VisibilityEvent {
+    --> VisibilityRecord record
 }

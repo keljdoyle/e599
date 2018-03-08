@@ -12,3 +12,6 @@ npm install -g composer-playground
 
 # The generator that is used to build a project structure
 npm install -g generator-hyperledger-composer
+
+# install a web socket client for testing events
+npm install -g wscat

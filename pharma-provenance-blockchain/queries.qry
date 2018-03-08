@@ -5,9 +5,9 @@ query selectProductByName {
           WHERE (productName == _$productName)
 }
 
-query selectDeliveryByGTIN {
+query selectVisibilityEventByGTIN {
   description: "Find goods received by package identifier."
   statement:
-      SELECT org.e599.model.GoodsReceived
+      SELECT org.e599.model.VisibilityRecord
           WHERE (gtin == _$gtin)
 }

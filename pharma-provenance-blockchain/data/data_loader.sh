@@ -161,6 +161,15 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "shipper" : "org.e599.model.SupplyChainPartner#5"
 }' 'http://localhost:3000/api/Shipment'
 
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.Shipment",
+  "sscc": "SSCC-1113",
+  "container": "org.e599.model.Container#gtin-cont-1",
+  "sendFrom": "org.e599.model.Location#gln4444",
+  "sendTo": "org.e599.model.Location#gln3333",
+  "shipper" : "org.e599.model.SupplyChainPartner#5"
+}' 'http://localhost:3000/api/Shipment'
+
 
 # Execute packaging transactions
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
@@ -178,4 +187,14 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
   "$class": "org.e599.model.DeliveryTransaction",
   "shipment": "org.e599.model.Shipment#SSCC-1112"
+}' 'http://localhost:3000/api/DeliveryTransaction'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.DeliveryTransaction",
+  "shipment": "org.e599.model.Shipment#SSCC-1113"
+}' 'http://localhost:3000/api/DeliveryTransaction'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.ShippingTransaction",
+  "shipment": "org.e599.model.Shipment#SSCC-1113"
 }' 'http://localhost:3000/api/DeliveryTransaction'
