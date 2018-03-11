@@ -13,9 +13,9 @@
 
             
               <div class="form-group text-left">
-                <label for="gln">gln</label>
+                <label for="GLN">GLN</label>
                 
-                  <input formControlName="gln" type="text" class="form-control">
+                  <input formControlName="GLN" type="text" class="form-control">
                 
               </div>
             
@@ -67,10 +67,10 @@
 
           
             <div class="form-group text-left">
-              <label for="gln">gln</label>
+              <label for="GLN">GLN</label>
 
               
-                <input [ngModel]="gln"formControlName="gln" type="text" class="form-control">
+                <input [ngModel]="GLN"formControlName="GLN" type="text" class="form-control">
               
 
             </div>
@@ -156,7 +156,7 @@
         <thead class="thead">
           <tr class="thead-cols">
             
-                <th class="info">gln</th>
+                <th class="info">GLN</th>
             
                 <th class="info">address</th>
             
@@ -169,16 +169,16 @@
           <tr *ngFor="let asset of allAssets">
 
             
-                <td>{{asset.gln}}</td>
+                <td>{{asset.GLN}}</td>
             
                 <td>{{asset.address}}</td>
             
                 <td>{{asset.company}}</td>
             
             <td>
-              <button (click)="getForm(asset.gln);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
+              <button (click)="getForm(asset.GLN);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
 
-              <button (click)="setId(asset.gln);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
+              <button (click)="setId(asset.GLN);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
             </td>
           </tr>
         </tbody>

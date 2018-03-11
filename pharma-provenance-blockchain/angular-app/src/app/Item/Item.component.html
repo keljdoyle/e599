@@ -13,19 +13,9 @@
 
             
               <div class="form-group text-left">
-                <label for="sscc">sscc</label>
+                <label for="GTIN">GTIN</label>
                 
-                  <input formControlName="sscc" type="text" class="form-control">
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="gtin">gtin</label>
-                
-                  <input formControlName="gtin" type="text" class="form-control">
+                  <input formControlName="GTIN" type="text" class="form-control">
                 
               </div>
             
@@ -33,9 +23,39 @@
 
             
               <div class="form-group text-left">
-                <label for="gln">gln</label>
+                <label for="unitCount">unitCount</label>
                 
-                  <input formControlName="gln" type="text" class="form-control">
+                  <input formControlName="unitCount" type="number" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="dosage">dosage</label>
+                
+                  <input formControlName="dosage" type="number" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="unit">unit</label>
+                
+                  <input formControlName="unit" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="product">product</label>
+                
+                    <textarea formControlName="product" class="form-control" rows="3"></textarea>
                 
               </div>
             
@@ -67,28 +87,48 @@
 
           
             <div class="form-group text-left">
-              <label for="sscc">sscc</label>
+              <label for="GTIN">GTIN</label>
 
               
-                <input [ngModel]="sscc"formControlName="sscc" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="gtin">gtin</label>
-
-              
-                <input [ngModel]="gtin"formControlName="gtin" type="text" class="form-control">
+                <input [ngModel]="GTIN"formControlName="GTIN" type="text" class="form-control">
               
 
             </div>
           
             <div class="form-group text-left">
-              <label for="gln">gln</label>
+              <label for="unitCount">unitCount</label>
 
               
-                <input [ngModel]="gln"formControlName="gln" type="text" class="form-control">
+                <input [ngModel]="unitCount" formControlName="unitCount" type="number" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="dosage">dosage</label>
+
+              
+                <input [ngModel]="dosage" formControlName="dosage" type="number" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="unit">unit</label>
+
+              
+                <input [ngModel]="unit"formControlName="unit" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="product">product</label>
+
+              
+                
+                  <textarea [ngModel]="product" formControlName="product" class="form-control" rows="3"></textarea>
+                
               
 
             </div>
@@ -141,7 +181,7 @@
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<strong>Error:</strong> {{errorMessage}}
 	</div>
-  <h1 id='assetName'>Goods Received</h1>
+  <h1 id='assetName'>Item</h1>
   <div class="row">
     <div class="col-md-12 text-right">
       <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Asset</button>
@@ -154,11 +194,15 @@
         <thead class="thead">
           <tr class="thead-cols">
             
-                <th class="info">sscc</th>
+                <th class="info">GTIN</th>
             
-                <th class="info">gtin</th>
+                <th class="info">unitCount</th>
             
-                <th class="info">gln</th>
+                <th class="info">dosage</th>
+            
+                <th class="info">unit</th>
+            
+                <th class="info">product</th>
             
               <th class="info">Actions</th>
           </tr>
@@ -167,16 +211,20 @@
           <tr *ngFor="let asset of allAssets">
 
             
-                <td>{{asset.sscc}}</td>
+                <td>{{asset.GTIN}}</td>
             
-                <td>{{asset.gtin}}</td>
+                <td>{{asset.unitCount}}</td>
             
-                <td>{{asset.gln}}</td>
+                <td>{{asset.dosage}}</td>
+            
+                <td>{{asset.unit}}</td>
+            
+                <td>{{asset.product}}</td>
             
             <td>
-              <button (click)="getForm(asset.sscc);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
+              <button (click)="getForm(asset.GTIN);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
 
-              <button (click)="setId(asset.sscc);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
+              <button (click)="setId(asset.GTIN);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
             </td>
           </tr>
         </tbody>

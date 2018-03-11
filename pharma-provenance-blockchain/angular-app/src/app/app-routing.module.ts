@@ -5,12 +5,11 @@ import { HomeComponent } from './home/home.component';
 
 import { BatchComponent } from './Batch/Batch.component';
 import { ProductComponent } from './Product/Product.component';
-import { ContainerComponent } from './Container/Container.component';
+import { ItemComponent } from './Item/Item.component';
+import { ShippingContainerComponent } from './ShippingContainer/ShippingContainer.component';
 import { IndividualPackageComponent } from './IndividualPackage/IndividualPackage.component';
 import { LocationComponent } from './Location/Location.component';
-import { ShipmentComponent } from './Shipment/Shipment.component';
-import { GoodsIssuedComponent } from './GoodsIssued/GoodsIssued.component';
-import { GoodsReceivedComponent } from './GoodsReceived/GoodsReceived.component';
+import { VisibilityRecordComponent } from './VisibilityRecord/VisibilityRecord.component';
 
 const routes: Routes = [
     // { path: 'transaction', component: TransactionComponent },
@@ -20,17 +19,15 @@ const routes: Routes = [
 		
 		{ path: 'Product', component: ProductComponent},
 		
-		{ path: 'Container', component: ContainerComponent},
+		{ path: 'Item', component: ItemComponent},
+		
+		{ path: 'ShippingContainer', component: ShippingContainerComponent},
 		
 		{ path: 'IndividualPackage', component: IndividualPackageComponent},
 		
 		{ path: 'Location', component: LocationComponent},
 		
-		{ path: 'Shipment', component: ShipmentComponent},
-		
-		{ path: 'GoodsIssued', component: GoodsIssuedComponent},
-		
-		{ path: 'GoodsReceived', component: GoodsReceivedComponent},
+		{ path: 'VisibilityRecord', component: VisibilityRecordComponent},
 		
 		{path: '**', redirectTo:''}
 

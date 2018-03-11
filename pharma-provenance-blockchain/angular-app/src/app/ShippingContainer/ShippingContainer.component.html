@@ -13,19 +13,9 @@
 
             
               <div class="form-group text-left">
-                <label for="sscc">sscc</label>
+                <label for="SSCC">SSCC</label>
                 
-                  <input formControlName="sscc" type="text" class="form-control">
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="container">container</label>
-                
-                    <textarea formControlName="container" class="form-control" rows="3"></textarea>
+                  <input formControlName="SSCC" type="text" class="form-control">
                 
               </div>
             
@@ -33,19 +23,9 @@
 
             
               <div class="form-group text-left">
-                <label for="sendFrom">sendFrom</label>
+                <label for="GTIN">GTIN</label>
                 
-                    <textarea formControlName="sendFrom" class="form-control" rows="3"></textarea>
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="sendTo">sendTo</label>
-                
-                    <textarea formControlName="sendTo" class="form-control" rows="3"></textarea>
+                  <input formControlName="GTIN" type="text" class="form-control">
                 
               </div>
             
@@ -53,9 +33,29 @@
 
             
               <div class="form-group text-left">
-                <label for="shipper">shipper</label>
+                <label for="currentLocation">currentLocation</label>
                 
-                    <textarea formControlName="shipper" class="form-control" rows="3"></textarea>
+                    <textarea formControlName="currentLocation" class="form-control" rows="3"></textarea>
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="packages">packages</label>
+                
+                    <textarea formControlName="packages" class="form-control" rows="3"></textarea>
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="product">product</label>
+                
+                    <textarea formControlName="product" class="form-control" rows="3"></textarea>
                 
               </div>
             
@@ -87,53 +87,51 @@
 
           
             <div class="form-group text-left">
-              <label for="sscc">sscc</label>
+              <label for="SSCC">SSCC</label>
 
               
-                <input [ngModel]="sscc"formControlName="sscc" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="container">container</label>
-
-              
-                
-                  <textarea [ngModel]="container" formControlName="container" class="form-control" rows="3"></textarea>
-                
+                <input [ngModel]="SSCC"formControlName="SSCC" type="text" class="form-control">
               
 
             </div>
           
             <div class="form-group text-left">
-              <label for="sendFrom">sendFrom</label>
+              <label for="GTIN">GTIN</label>
 
               
-                
-                  <textarea [ngModel]="sendFrom" formControlName="sendFrom" class="form-control" rows="3"></textarea>
-                
+                <input [ngModel]="GTIN"formControlName="GTIN" type="text" class="form-control">
               
 
             </div>
           
             <div class="form-group text-left">
-              <label for="sendTo">sendTo</label>
+              <label for="currentLocation">currentLocation</label>
 
               
                 
-                  <textarea [ngModel]="sendTo" formControlName="sendTo" class="form-control" rows="3"></textarea>
+                  <textarea [ngModel]="currentLocation" formControlName="currentLocation" class="form-control" rows="3"></textarea>
                 
               
 
             </div>
           
             <div class="form-group text-left">
-              <label for="shipper">shipper</label>
+              <label for="packages">packages</label>
 
               
                 
-                  <textarea [ngModel]="shipper" formControlName="shipper" class="form-control" rows="3"></textarea>
+                  <textarea [ngModel]="packages" formControlName="packages" class="form-control" rows="3"></textarea>
+                
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="product">product</label>
+
+              
+                
+                  <textarea [ngModel]="product" formControlName="product" class="form-control" rows="3"></textarea>
                 
               
 
@@ -187,7 +185,7 @@
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<strong>Error:</strong> {{errorMessage}}
 	</div>
-  <h1 id='assetName'>Shipment</h1>
+  <h1 id='assetName'>ShippingContainer</h1>
   <div class="row">
     <div class="col-md-12 text-right">
       <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Asset</button>
@@ -200,15 +198,15 @@
         <thead class="thead">
           <tr class="thead-cols">
             
-                <th class="info">sscc</th>
+                <th class="info">SSCC</th>
             
-                <th class="info">container</th>
+                <th class="info">GTIN</th>
             
-                <th class="info">sendFrom</th>
+                <th class="info">currentLocation</th>
             
-                <th class="info">sendTo</th>
+                <th class="info">packages</th>
             
-                <th class="info">shipper</th>
+                <th class="info">product</th>
             
               <th class="info">Actions</th>
           </tr>
@@ -217,20 +215,20 @@
           <tr *ngFor="let asset of allAssets">
 
             
-                <td>{{asset.sscc}}</td>
+                <td>{{asset.SSCC}}</td>
             
-                <td>{{asset.container}}</td>
+                <td>{{asset.GTIN}}</td>
             
-                <td>{{asset.sendFrom}}</td>
+                <td>{{asset.currentLocation}}</td>
             
-                <td>{{asset.sendTo}}</td>
+                <td>{{asset.packages}}</td>
             
-                <td>{{asset.shipper}}</td>
+                <td>{{asset.product}}</td>
             
             <td>
-              <button (click)="getForm(asset.sscc);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
+              <button (click)="getForm(asset.SSCC);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
 
-              <button (click)="setId(asset.sscc);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
+              <button (click)="setId(asset.SSCC);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
             </td>
           </tr>
         </tbody>

@@ -1,6 +1,4 @@
 
-
-
 # Add partners
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{  
    "$class": "org.e599.model.SupplyChainPartner",  
@@ -33,6 +31,35 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
    "companyName": "BFD Shippers"  
  }' 'http://localhost:3000/api/SupplyChainPartner'
 
+# Locations
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.Location",
+  "GLN": "gln2222",
+  "address": "130 west rd. Warwick, RI 02886",
+  "company": "org.e599.model.SupplyChainPartner#1" 
+}' 'http://localhost:3000/api/Location'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.Location",
+  "GLN": "gln3333",
+  "address": "22 test rd. Santa Clara, CA 95051",
+  "company": "org.e599.model.SupplyChainPartner#2" 
+}' 'http://localhost:3000/api/Location'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.Location",
+  "GLN": "gln4444",
+  "address": "550 Madison ave. New York, NY 10002",
+  "company": "org.e599.model.SupplyChainPartner#3"
+}' 'http://localhost:3000/api/Location'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.Location",
+  "GLN": "gln1111",
+  "address": "13 Flats Rd. Salt Lake City, UT 84108",
+  "company": "org.e599.model.SupplyChainPartner#4" 
+}' 'http://localhost:3000/api/Location'
+
  # Add products
  curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{  
    "$class": "org.e599.model.Product",  
@@ -47,35 +74,6 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
    "productName": "Flemendrex",  
    "manufacturer": "org.e599.model.SupplyChainPartner#1"  
  }' 'http://localhost:3000/api/Product'
-
-# Locations
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Location",
-  "gln": "gln2222",
-  "address": "130 west rd. Warwick, RI 02886",
-  "company": "org.e599.model.SupplyChainPartner#1" 
-}' 'http://localhost:3000/api/Location'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Location",
-  "gln": "gln3333",
-  "address": "22 test rd. Santa Clara, CA 95051",
-  "company": "org.e599.model.SupplyChainPartner#2" 
-}' 'http://localhost:3000/api/Location'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Location",
-  "gln": "gln4444",
-  "address": "550 Madison ave. New York, NY 10002",
-  "company": "org.e599.model.SupplyChainPartner#3"
-}' 'http://localhost:3000/api/Location'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Location",
-  "gln": "gln1111",
-  "address": "13 Flats Rd. Salt Lake City, UT 84108",
-  "company": "org.e599.model.SupplyChainPartner#4" 
-}' 'http://localhost:3000/api/Location'
 
 # Batch
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
@@ -94,107 +92,67 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "manufactureLocation" : "org.e599.model.Location#gln2222"
 }' 'http://localhost:3000/api/Batch'
 
+# Add Items 
+ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "$class": "org.e599.model.Item",
+  "GTIN": "GTIN-0001",
+  "product": "org.e599.model.Product#1",
+  "unitCount" : 500,
+  "unit" : "mg",
+  "dosage" : 25
+}' 'http://localhost:3000/api/Item'
+
 # Individual package
  curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
   "$class": "org.e599.model.IndividualPackage",
-  "gtin": "gtin1111",
-  "product": "org.e599.model.Product#1",
-  "unitCount" : 500,
-  "unit" : "mg",
-  "dosage" : 25,
+  "SGTIN" : "GTIN-0001-0001",
+  "item": "org.e599.model.Item#GTIN-0001",
   "batch" : "org.e599.model.Batch#B0001"
 }' 'http://localhost:3000/api/IndividualPackage'
 
  curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
   "$class": "org.e599.model.IndividualPackage",
-  "gtin": "gtin1112",
-  "product": "org.e599.model.Product#1",
-  "unitCount" : 500,
-  "unit" : "mg",
-  "dosage" : 25,
-  "batch" : "org.e599.model.Batch#B0001"
-}' 'http://localhost:3000/api/IndividualPackage'
-
- curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.IndividualPackage",
-  "gtin": "gtin1113",
-  "product": "org.e599.model.Product#1",
-  "unitCount" : 500,
-  "unit" : "mg",
-  "dosage" : 25,
+  "SGTIN" : "GTIN-0001-0002",
+  "item": "org.e599.model.Item#GTIN-0001",
   "batch" : "org.e599.model.Batch#B0001"
 }' 'http://localhost:3000/api/IndividualPackage'
 
 # Containers
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Container",
-  "gtin": "gtin-cont-1",
-  "currentLocation": "org.e599.model.Location#gln2222",
-  "packages": [
-    "org.e599.model.IndividualPackage#gtin1111"
-  ]
-}' 'http://localhost:3000/api/Container'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Container",
-  "gtin": "gtin-cont-2",
+  "$class": "org.e599.model.ShippingContainer",
+  "SSCC" : "SSCC-0001",
+  "GTIN": "GTIN-0001",
   "currentLocation": "org.e599.model.Location#gln2222",
   "packages": []
-}' 'http://localhost:3000/api/Container'
-
-# Define shipments
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Shipment",
-  "sscc": "SSCC-1111",
-  "container": "org.e599.model.Container#gtin-cont-1",
-  "sendFrom": "org.e599.model.Location#gln2222",
-  "sendTo": "org.e599.model.Location#gln3333",
-  "shipper" : "org.e599.model.SupplyChainPartner#5"
-}' 'http://localhost:3000/api/Shipment'
+}' 'http://localhost:3000/api/ShippingContainer'
 
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Shipment",
-  "sscc": "SSCC-1112",
-  "container": "org.e599.model.Container#gtin-cont-1",
-  "sendFrom": "org.e599.model.Location#gln3333",
-  "sendTo": "org.e599.model.Location#gln4444",
-  "shipper" : "org.e599.model.SupplyChainPartner#5"
-}' 'http://localhost:3000/api/Shipment'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.Shipment",
-  "sscc": "SSCC-1113",
-  "container": "org.e599.model.Container#gtin-cont-1",
-  "sendFrom": "org.e599.model.Location#gln4444",
-  "sendTo": "org.e599.model.Location#gln3333",
-  "shipper" : "org.e599.model.SupplyChainPartner#5"
-}' 'http://localhost:3000/api/Shipment'
+  "$class": "org.e599.model.ShippingContainer",
+  "SSCC" : "SSCC-0002",
+  "GTIN": "GTIN-0001",
+  "currentLocation": "org.e599.model.Location#gln2222",
+  "packages": []
+}' 'http://localhost:3000/api/ShippingContainer'
 
 
 # Execute packaging transactions
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
   "$class" : "org.e599.model.PackageTransaction",
-  "container" : "org.e599.model.Container#gtin-cont-2",
-  "contents" : ["org.e599.model.IndividualPackage#gtin1112", "org.e599.model.IndividualPackage#gtin1113"]
+  "container" : "org.e599.model.ShippingContainer#SSCC-0001",
+  "contents" : ["org.e599.model.IndividualPackage#GTIN-0001-0001", "org.e599.model.IndividualPackage#GTIN-0001-0002"],
+  "readPoint": "org.e599.model.Location#gln2222"
 }' 'http://localhost:3000/api/PackageTransaction'
 
 # Execute delivery transactions.
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.DeliveryTransaction",
-  "shipment": "org.e599.model.Shipment#SSCC-1111"
-}' 'http://localhost:3000/api/DeliveryTransaction'
+  "$class": "org.e599.model.ShipTransaction",
+  "container": "org.e599.model.ShippingContainer#SSCC-0001",
+  "readPoint": "org.e599.model.Location#gln2222"
+}' 'http://localhost:3000/api/ShipTransaction'
 
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.DeliveryTransaction",
-  "shipment": "org.e599.model.Shipment#SSCC-1112"
-}' 'http://localhost:3000/api/DeliveryTransaction'
+  "$class": "org.e599.model.ReceiveTransaction",
+  "container": "org.e599.model.ShippingContainer#SSCC-0001",
+  "readPoint": "org.e599.model.Location#gln3333"
+}' 'http://localhost:3000/api/ReceiveTransaction'
 
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.DeliveryTransaction",
-  "shipment": "org.e599.model.Shipment#SSCC-1113"
-}' 'http://localhost:3000/api/DeliveryTransaction'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "$class": "org.e599.model.ShippingTransaction",
-  "shipment": "org.e599.model.Shipment#SSCC-1113"
-}' 'http://localhost:3000/api/DeliveryTransaction'

@@ -49,16 +49,30 @@ describe('Starting tests for angular-app', function() {
     });
 
   
-    it('Container component should be loadable',() => {
-      page.navigateTo('/Container');
+    it('Item component should be loadable',() => {
+      page.navigateTo('/Item');
       var assetName = browser.findElement(by.id('assetName'));
-      expect(assetName.getText()).toBe('Container');
+      expect(assetName.getText()).toBe('Item');
     });
 
-    it('Container table should have 4 columns',() => {
-      page.navigateTo('/Container');
+    it('Item table should have 6 columns',() => {
+      page.navigateTo('/Item');
       element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(4); // Addition of 1 for 'Action' column
+        expect(arr.length).toEqual(6); // Addition of 1 for 'Action' column
+      });
+    });
+
+  
+    it('ShippingContainer component should be loadable',() => {
+      page.navigateTo('/ShippingContainer');
+      var assetName = browser.findElement(by.id('assetName'));
+      expect(assetName.getText()).toBe('ShippingContainer');
+    });
+
+    it('ShippingContainer table should have 6 columns',() => {
+      page.navigateTo('/ShippingContainer');
+      element.all(by.css('.thead-cols th')).then(function(arr) {
+        expect(arr.length).toEqual(6); // Addition of 1 for 'Action' column
       });
     });
 
@@ -69,10 +83,10 @@ describe('Starting tests for angular-app', function() {
       expect(assetName.getText()).toBe('IndividualPackage');
     });
 
-    it('IndividualPackage table should have 7 columns',() => {
+    it('IndividualPackage table should have 5 columns',() => {
       page.navigateTo('/IndividualPackage');
       element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(7); // Addition of 1 for 'Action' column
+        expect(arr.length).toEqual(5); // Addition of 1 for 'Action' column
       });
     });
 
@@ -91,44 +105,16 @@ describe('Starting tests for angular-app', function() {
     });
 
   
-    it('Shipment component should be loadable',() => {
-      page.navigateTo('/Shipment');
+    it('VisibilityRecord component should be loadable',() => {
+      page.navigateTo('/VisibilityRecord');
       var assetName = browser.findElement(by.id('assetName'));
-      expect(assetName.getText()).toBe('Shipment');
+      expect(assetName.getText()).toBe('VisibilityRecord');
     });
 
-    it('Shipment table should have 6 columns',() => {
-      page.navigateTo('/Shipment');
+    it('VisibilityRecord table should have 12 columns',() => {
+      page.navigateTo('/VisibilityRecord');
       element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(6); // Addition of 1 for 'Action' column
-      });
-    });
-
-  
-    it('GoodsIssued component should be loadable',() => {
-      page.navigateTo('/GoodsIssued');
-      var assetName = browser.findElement(by.id('assetName'));
-      expect(assetName.getText()).toBe('GoodsIssued');
-    });
-
-    it('GoodsIssued table should have 4 columns',() => {
-      page.navigateTo('/GoodsIssued');
-      element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(4); // Addition of 1 for 'Action' column
-      });
-    });
-
-  
-    it('GoodsReceived component should be loadable',() => {
-      page.navigateTo('/GoodsReceived');
-      var assetName = browser.findElement(by.id('assetName'));
-      expect(assetName.getText()).toBe('GoodsReceived');
-    });
-
-    it('GoodsReceived table should have 4 columns',() => {
-      page.navigateTo('/GoodsReceived');
-      element.all(by.css('.thead-cols th')).then(function(arr) {
-        expect(arr.length).toEqual(4); // Addition of 1 for 'Action' column
+        expect(arr.length).toEqual(12); // Addition of 1 for 'Action' column
       });
     });
 

@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { GoodsIssuedService } from './GoodsIssued.service';
+import { ItemService } from './Item.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
-	selector: 'app-GoodsIssued',
-	templateUrl: './GoodsIssued.component.html',
-	styleUrls: ['./GoodsIssued.component.css'],
-  providers: [GoodsIssuedService]
+	selector: 'app-Item',
+	templateUrl: './Item.component.html',
+	styleUrls: ['./Item.component.css'],
+  providers: [ItemService]
 })
-export class GoodsIssuedComponent implements OnInit {
+export class ItemComponent implements OnInit {
 
   myForm: FormGroup;
 
@@ -19,32 +19,48 @@ export class GoodsIssuedComponent implements OnInit {
 
   
       
-          sscc = new FormControl("", Validators.required);
+          GTIN = new FormControl("", Validators.required);
         
   
       
-          gtin = new FormControl("", Validators.required);
+          unitCount = new FormControl("", Validators.required);
         
   
       
-          gln = new FormControl("", Validators.required);
+          dosage = new FormControl("", Validators.required);
+        
+  
+      
+          unit = new FormControl("", Validators.required);
+        
+  
+      
+          product = new FormControl("", Validators.required);
         
   
 
 
-  constructor(private serviceGoodsIssued:GoodsIssuedService, fb: FormBuilder) {
+  constructor(private serviceItem:ItemService, fb: FormBuilder) {
     this.myForm = fb.group({
     
         
-          sscc:this.sscc,
+          GTIN:this.GTIN,
         
     
         
-          gtin:this.gtin,
+          unitCount:this.unitCount,
         
     
         
-          gln:this.gln
+          dosage:this.dosage,
+        
+    
+        
+          unit:this.unit,
+        
+    
+        
+          product:this.product
         
     
     });
@@ -56,7 +72,7 @@ export class GoodsIssuedComponent implements OnInit {
 
   loadAll(): Promise<any> {
     let tempList = [];
-    return this.serviceGoodsIssued.getAll()
+    return this.serviceItem.getAll()
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
@@ -105,18 +121,26 @@ export class GoodsIssuedComponent implements OnInit {
 
   addAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.GoodsIssued",
+      $class: "org.e599.model.Item",
       
         
-          "sscc":this.sscc.value,
-        
-      
-        
-          "gtin":this.gtin.value,
+          "GTIN":this.GTIN.value,
         
       
         
-          "gln":this.gln.value
+          "unitCount":this.unitCount.value,
+        
+      
+        
+          "dosage":this.dosage.value,
+        
+      
+        
+          "unit":this.unit.value,
+        
+      
+        
+          "product":this.product.value
         
       
     };
@@ -124,35 +148,51 @@ export class GoodsIssuedComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "sscc":null,
+          "GTIN":null,
         
       
         
-          "gtin":null,
+          "unitCount":null,
         
       
         
-          "gln":null
+          "dosage":null,
+        
+      
+        
+          "unit":null,
+        
+      
+        
+          "product":null
         
       
     });
 
-    return this.serviceGoodsIssued.addAsset(this.asset)
+    return this.serviceItem.addAsset(this.asset)
     .toPromise()
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
       
         
-          "sscc":null,
+          "GTIN":null,
         
       
         
-          "gtin":null,
+          "unitCount":null,
         
       
         
-          "gln":null 
+          "dosage":null,
+        
+      
+        
+          "unit":null,
+        
+      
+        
+          "product":null 
         
       
       });
@@ -170,7 +210,7 @@ export class GoodsIssuedComponent implements OnInit {
 
    updateAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.GoodsIssued",
+      $class: "org.e599.model.Item",
       
         
           
@@ -178,19 +218,31 @@ export class GoodsIssuedComponent implements OnInit {
     
         
           
-            "gtin":this.gtin.value,
+            "unitCount":this.unitCount.value,
           
         
     
         
           
-            "gln":this.gln.value
+            "dosage":this.dosage.value,
+          
+        
+    
+        
+          
+            "unit":this.unit.value,
+          
+        
+    
+        
+          
+            "product":this.product.value
           
         
     
     };
 
-    return this.serviceGoodsIssued.updateAsset(form.get("sscc").value,this.asset)
+    return this.serviceItem.updateAsset(form.get("GTIN").value,this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -211,7 +263,7 @@ export class GoodsIssuedComponent implements OnInit {
 
   deleteAsset(): Promise<any> {
 
-    return this.serviceGoodsIssued.deleteAsset(this.currentId)
+    return this.serviceItem.deleteAsset(this.currentId)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -235,22 +287,30 @@ export class GoodsIssuedComponent implements OnInit {
 
   getForm(id: any): Promise<any>{
 
-    return this.serviceGoodsIssued.getAsset(id)
+    return this.serviceItem.getAsset(id)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
         
           
-            "sscc":null,
+            "GTIN":null,
           
         
           
-            "gtin":null,
+            "unitCount":null,
           
         
           
-            "gln":null 
+            "dosage":null,
+          
+        
+          
+            "unit":null,
+          
+        
+          
+            "product":null 
           
         
       };
@@ -258,28 +318,44 @@ export class GoodsIssuedComponent implements OnInit {
 
 
       
-        if(result.sscc){
+        if(result.GTIN){
           
-            formObject.sscc = result.sscc;
+            formObject.GTIN = result.GTIN;
           
         }else{
-          formObject.sscc = null;
+          formObject.GTIN = null;
         }
       
-        if(result.gtin){
+        if(result.unitCount){
           
-            formObject.gtin = result.gtin;
+            formObject.unitCount = result.unitCount;
           
         }else{
-          formObject.gtin = null;
+          formObject.unitCount = null;
         }
       
-        if(result.gln){
+        if(result.dosage){
           
-            formObject.gln = result.gln;
+            formObject.dosage = result.dosage;
           
         }else{
-          formObject.gln = null;
+          formObject.dosage = null;
+        }
+      
+        if(result.unit){
+          
+            formObject.unit = result.unit;
+          
+        }else{
+          formObject.unit = null;
+        }
+      
+        if(result.product){
+          
+            formObject.product = result.product;
+          
+        }else{
+          formObject.product = null;
         }
       
 
@@ -304,15 +380,23 @@ export class GoodsIssuedComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "sscc":null,
+          "GTIN":null,
         
       
         
-          "gtin":null,
+          "unitCount":null,
         
       
         
-          "gln":null 
+          "dosage":null,
+        
+      
+        
+          "unit":null,
+        
+      
+        
+          "product":null 
         
       
       });

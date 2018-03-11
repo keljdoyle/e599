@@ -19,27 +19,19 @@ export class IndividualPackageComponent implements OnInit {
 
   
       
-          gtin = new FormControl("", Validators.required);
+          SGTIN = new FormControl("", Validators.required);
         
   
       
-          unitCount = new FormControl("", Validators.required);
-        
-  
-      
-          dosage = new FormControl("", Validators.required);
-        
-  
-      
-          unit = new FormControl("", Validators.required);
-        
-  
-      
-          product = new FormControl("", Validators.required);
+          item = new FormControl("", Validators.required);
         
   
       
           batch = new FormControl("", Validators.required);
+        
+  
+      
+          currentLocation = new FormControl("", Validators.required);
         
   
 
@@ -48,27 +40,19 @@ export class IndividualPackageComponent implements OnInit {
     this.myForm = fb.group({
     
         
-          gtin:this.gtin,
+          SGTIN:this.SGTIN,
         
     
         
-          unitCount:this.unitCount,
+          item:this.item,
         
     
         
-          dosage:this.dosage,
+          batch:this.batch,
         
     
         
-          unit:this.unit,
-        
-    
-        
-          product:this.product,
-        
-    
-        
-          batch:this.batch
+          currentLocation:this.currentLocation
         
     
     });
@@ -132,27 +116,19 @@ export class IndividualPackageComponent implements OnInit {
       $class: "org.e599.model.IndividualPackage",
       
         
-          "gtin":this.gtin.value,
+          "SGTIN":this.SGTIN.value,
         
       
         
-          "unitCount":this.unitCount.value,
+          "item":this.item.value,
         
       
         
-          "dosage":this.dosage.value,
+          "batch":this.batch.value,
         
       
         
-          "unit":this.unit.value,
-        
-      
-        
-          "product":this.product.value,
-        
-      
-        
-          "batch":this.batch.value
+          "currentLocation":this.currentLocation.value
         
       
     };
@@ -160,27 +136,19 @@ export class IndividualPackageComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "gtin":null,
+          "SGTIN":null,
         
       
         
-          "unitCount":null,
+          "item":null,
         
       
         
-          "dosage":null,
+          "batch":null,
         
       
         
-          "unit":null,
-        
-      
-        
-          "product":null,
-        
-      
-        
-          "batch":null
+          "currentLocation":null
         
       
     });
@@ -192,27 +160,19 @@ export class IndividualPackageComponent implements OnInit {
       this.myForm.setValue({
       
         
-          "gtin":null,
+          "SGTIN":null,
         
       
         
-          "unitCount":null,
+          "item":null,
         
       
         
-          "dosage":null,
+          "batch":null,
         
       
         
-          "unit":null,
-        
-      
-        
-          "product":null,
-        
-      
-        
-          "batch":null 
+          "currentLocation":null 
         
       
       });
@@ -238,37 +198,25 @@ export class IndividualPackageComponent implements OnInit {
     
         
           
-            "unitCount":this.unitCount.value,
+            "item":this.item.value,
           
         
     
         
           
-            "dosage":this.dosage.value,
+            "batch":this.batch.value,
           
         
     
         
           
-            "unit":this.unit.value,
-          
-        
-    
-        
-          
-            "product":this.product.value,
-          
-        
-    
-        
-          
-            "batch":this.batch.value
+            "currentLocation":this.currentLocation.value
           
         
     
     };
 
-    return this.serviceIndividualPackage.updateAsset(form.get("gtin").value,this.asset)
+    return this.serviceIndividualPackage.updateAsset(form.get("SGTIN").value,this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -320,27 +268,19 @@ export class IndividualPackageComponent implements OnInit {
       let formObject = {
         
           
-            "gtin":null,
+            "SGTIN":null,
           
         
           
-            "unitCount":null,
+            "item":null,
           
         
           
-            "dosage":null,
+            "batch":null,
           
         
           
-            "unit":null,
-          
-        
-          
-            "product":null,
-          
-        
-          
-            "batch":null 
+            "currentLocation":null 
           
         
       };
@@ -348,44 +288,20 @@ export class IndividualPackageComponent implements OnInit {
 
 
       
-        if(result.gtin){
+        if(result.SGTIN){
           
-            formObject.gtin = result.gtin;
+            formObject.SGTIN = result.SGTIN;
           
         }else{
-          formObject.gtin = null;
+          formObject.SGTIN = null;
         }
       
-        if(result.unitCount){
+        if(result.item){
           
-            formObject.unitCount = result.unitCount;
-          
-        }else{
-          formObject.unitCount = null;
-        }
-      
-        if(result.dosage){
-          
-            formObject.dosage = result.dosage;
+            formObject.item = result.item;
           
         }else{
-          formObject.dosage = null;
-        }
-      
-        if(result.unit){
-          
-            formObject.unit = result.unit;
-          
-        }else{
-          formObject.unit = null;
-        }
-      
-        if(result.product){
-          
-            formObject.product = result.product;
-          
-        }else{
-          formObject.product = null;
+          formObject.item = null;
         }
       
         if(result.batch){
@@ -394,6 +310,14 @@ export class IndividualPackageComponent implements OnInit {
           
         }else{
           formObject.batch = null;
+        }
+      
+        if(result.currentLocation){
+          
+            formObject.currentLocation = result.currentLocation;
+          
+        }else{
+          formObject.currentLocation = null;
         }
       
 
@@ -418,27 +342,19 @@ export class IndividualPackageComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "gtin":null,
+          "SGTIN":null,
         
       
         
-          "unitCount":null,
+          "item":null,
         
       
         
-          "dosage":null,
+          "batch":null,
         
       
         
-          "unit":null,
-        
-      
-        
-          "product":null,
-        
-      
-        
-          "batch":null 
+          "currentLocation":null 
         
       
       });

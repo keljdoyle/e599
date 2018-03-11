@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs/Observable';
-import { Container } from '../org.e599.model';
+import { VisibilityRecord } from '../org.e599.model';
 import 'rxjs/Rx';
 
 // Can be injected into a constructor
 @Injectable()
-export class ContainerService {
+export class VisibilityRecordService {
 
 	
-		private NAMESPACE: string = 'Container';
+		private NAMESPACE: string = 'VisibilityRecord';
 	
 
 
 
-    constructor(private dataService: DataService<Container>) {
+    constructor(private dataService: DataService<VisibilityRecord>) {
     };
 
-    public getAll(): Observable<Container[]> {
+    public getAll(): Observable<VisibilityRecord[]> {
         return this.dataService.getAll(this.NAMESPACE);
     }
 
-    public getAsset(id: any): Observable<Container> {
+    public getAsset(id: any): Observable<VisibilityRecord> {
       return this.dataService.getSingle(this.NAMESPACE, id);
     }
 
-    public addAsset(itemToAdd: any): Observable<Container> {
+    public addAsset(itemToAdd: any): Observable<VisibilityRecord> {
       return this.dataService.add(this.NAMESPACE, itemToAdd);
     }
 
-    public updateAsset(id: any, itemToUpdate: any): Observable<Container> {
+    public updateAsset(id: any, itemToUpdate: any): Observable<VisibilityRecord> {
       return this.dataService.update(this.NAMESPACE, id, itemToUpdate);
     }
 
-    public deleteAsset(id: any): Observable<Container> {
+    public deleteAsset(id: any): Observable<VisibilityRecord> {
       return this.dataService.delete(this.NAMESPACE, id);
     }
 

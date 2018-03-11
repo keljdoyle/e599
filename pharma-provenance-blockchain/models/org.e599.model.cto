@@ -17,35 +17,35 @@ asset Product identified by productId {
 	  --> SupplyChainPartner manufacturer
 }
 
+/* Represents a specific product/package type. aka SKU */
+asset Item identified by GTIN {
+    o String GTIN
+    o Long unitCount
+    o Long dosage
+    o String unit
+    --> Product product
+}
+
 /* a parcel, pallet, or shipping container */
-asset Container identified by gtin {
-  	o String gtin
+asset ShippingContainer identified by SSCC {
+  	o String SSCC
+    o String GTIN
     --> Location currentLocation
     --> IndividualPackage[] packages optional
     --> Product product optional
 }
 
-asset IndividualPackage identified by gtin {
-    o String gtin
-    o Long unitCount
-    o Long dosage
-    o String unit
-    --> Product product
+asset IndividualPackage identified by SGTIN {
+    o String SGTIN
+    --> Item item
     --> Batch batch
+    --> Location currentLocation optional
 }
 
-asset Location identified by gln {
-    o String gln
+asset Location identified by GLN {
+    o String GLN
     o String address
 	  --> SupplyChainPartner company
-}
-
-asset Shipment identified by sscc {
-  o String sscc
-  --> Container container
-  --> Location sendFrom
-  --> Location sendTo
-  --> SupplyChainPartner shipper
 }
 
 participant SupplyChainPartner identified by partnerId {
@@ -62,36 +62,42 @@ participant SupplyChainPartner identified by partnerId {
  */
 asset VisibilityRecord identified by transactionId {
   o String transactionId
-  o String sscc
-  o String gtin
-  o String gln
+  o String SSCC optional
+  o String GTIN optional
+  o String GLN
+  o String[] SGTINs optional
   o String eventType
   o String businessStep
   o String action
   o String disposition
+  o String locationText optional
   o DateTime eventTime
 }
+
 
 /**
   This transaction is executed when a container is shipped.
  */
 transaction ShipTransaction {
-    --> Shipment shipment
+    --> ShippingContainer container
+    --> Location readPoint
 }
 
 /**
   This transaction is executed when a container is received.
  */
 transaction ReceiveTransaction {
-    --> Shipment shipment
+    --> ShippingContainer container
+    --> Location readPoint
 }
 
 /**
   This transaction is executed when individual packages are added to a container.
  */
 transaction PackageTransaction {
-    --> Container container
+    --> ShippingContainer container
     --> IndividualPackage[] contents
+    --> Location readPoint
 }
 
 event VisibilityEvent {

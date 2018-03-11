@@ -1,0 +1,384 @@
+<div class="modal fade" id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="addAssetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addAssetModalLabel">Add Asset</h4>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body">
+
+
+          
+
+            
+              <div class="form-group text-left">
+                <label for="transactionId">transactionId</label>
+                
+                  <input formControlName="transactionId" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="SSCC">SSCC</label>
+                
+                  <input formControlName="SSCC" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="GTIN">GTIN</label>
+                
+                  <input formControlName="GTIN" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="GLN">GLN</label>
+                
+                  <input formControlName="GLN" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="SGTINs">SGTINs</label>
+                
+                  <input formControlName="SGTINs" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="eventType">eventType</label>
+                
+                  <input formControlName="eventType" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="businessStep">businessStep</label>
+                
+                  <input formControlName="businessStep" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="action">action</label>
+                
+                  <input formControlName="action" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="disposition">disposition</label>
+                
+                  <input formControlName="disposition" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="locationText">locationText</label>
+                
+                  <input formControlName="locationText" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="eventTime">eventTime</label>
+                
+                  <input formControlName="eventTime" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+        </div>
+        <div class="modal-footer">
+          <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="updateAssetModalLabel">Update Asset</h4>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body">
+
+
+          
+            <div class="form-group text-left">
+              <label for="transactionId">transactionId</label>
+
+              
+                <input [ngModel]="transactionId"formControlName="transactionId" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="SSCC">SSCC</label>
+
+              
+                <input [ngModel]="SSCC"formControlName="SSCC" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="GTIN">GTIN</label>
+
+              
+                <input [ngModel]="GTIN"formControlName="GTIN" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="GLN">GLN</label>
+
+              
+                <input [ngModel]="GLN"formControlName="GLN" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="SGTINs">SGTINs</label>
+
+              
+                <input [ngModel]="SGTINs"formControlName="SGTINs" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="eventType">eventType</label>
+
+              
+                <input [ngModel]="eventType"formControlName="eventType" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="businessStep">businessStep</label>
+
+              
+                <input [ngModel]="businessStep"formControlName="businessStep" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="action">action</label>
+
+              
+                <input [ngModel]="action"formControlName="action" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="disposition">disposition</label>
+
+              
+                <input [ngModel]="disposition"formControlName="disposition" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="locationText">locationText</label>
+
+              
+                <input [ngModel]="locationText"formControlName="locationText" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="eventTime">eventTime</label>
+
+              
+                <input [ngModel]="eventTime"formControlName="eventTime" type="text" class="form-control">
+              
+
+            </div>
+          
+
+
+        </div>
+        <div class="modal-footer">
+          <button (click)="updateAsset(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="deleteAssetModalLabel">Delete Asset</h4>
+      </div>
+      <form [formGroup]="myForm" (ngSubmit)="deleteAsset()">
+        <div class="modal-body">
+          Are you sure you want to delete this asset?
+        </div>
+        <div class="modal-footer">
+          <button (click)="deleteAsset()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+		<strong>Error:</strong> {{errorMessage}}
+	</div>
+  <h1 id='assetName'>Visibility Record</h1>
+  <div class="row">
+    <div class="col-md-12 text-right">
+      <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Asset</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <label for="transactionId">SGTIN</label>
+      <input [ngModel]="sgtinSearch"formControlName="sgtinSearch" type="text" class="form-control">
+    </div>
+  </div>
+
+
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-responsive table-striped">
+        <thead class="thead">
+          <tr class="thead-cols">
+            
+                <th class="info">transactionId</th>
+            
+                <th class="info">SSCC</th>
+            
+                <th class="info">GTIN</th>
+            
+                <th class="info">GLN</th>
+            
+                <th class="info">SGTINs</th>
+            
+                <th class="info">eventType</th>
+            
+                <th class="info">businessStep</th>
+            
+                <th class="info">action</th>
+            
+                <th class="info">disposition</th>
+            
+                <th class="info">locationText</th>
+            
+                <th class="info">eventTime</th>
+            
+              <th class="info">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asset of allAssets">
+
+            
+                <td>{{asset.transactionId}}</td>
+            
+                <td>{{asset.SSCC}}</td>
+            
+                <td>{{asset.GTIN}}</td>
+            
+                <td>{{asset.GLN}}</td>
+            
+                <td>{{asset.SGTINs}}</td>
+            
+                <td>{{asset.eventType}}</td>
+            
+                <td>{{asset.businessStep}}</td>
+            
+                <td>{{asset.action}}</td>
+            
+                <td>{{asset.disposition}}</td>
+            
+                <td>{{asset.locationText}}</td>
+            
+                <td>{{asset.eventTime}}</td>
+            
+
+            <td>
+              <!--
+              <button (click)="getForm(asset.transactionId);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
+
+              <button (click)="setId(asset.transactionId);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
+              -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -5,69 +5,94 @@
  * @transaction
  */
 function packageContainer(packageTransaction) {
-    packageTransaction.container.packages = packageTransaction.contents;
-    // TODO: loop through individual packages and set current container.
+    var factory = getFactory();
 
-    return getAssetRegistry('org.e599.model.Container')
+    packageTransaction.container.packages = packageTransaction.contents;
+    packageTransaction.container.currentLocation = packageTransaction.readPoint;
+
+    getAssetRegistry('org.e599.model.ShippingContainer')
     .then(function (assetRegistry) {
-        return assetRegistry.update(packageTransaction.container);
+        assetRegistry.update(packageTransaction.container);
     });
 
-    //TODO: Log that individual items were added to a container
+    var record = factory.newResource('org.e599.model', 'VisibilityRecord', packageTransaction.transactionId);
+    record.SSCC = packageTransaction.container.SSCC;
+    record.GTIN = packageTransaction.container.GTIN;
+    record.GLN = packageTransaction.container.currentLocation.GLN;
+    record.eventType = 'AggregateEvent';
+    record.businessStep = 'Packaging';
+    record.action = "ADD";
+    record.disposition = "in_progress";
+    record.eventTime = packageTransaction.timestamp;
+    record.locationText = packageTransaction.container.currentLocation.address;
+
+    return getAssetRegistry('org.e599.model.VisibilityRecord')
+    .then(function (assetRegistry) {
+        assetRegistry.add(record);
+    });
 }
 
 /**
  * Track a partner shipping a container to another partner.
- * @param {org.e599.model.ShipTransaction} shipping - the delivery to be processed
+ * @param {org.e599.model.ShipTransaction} shipTransaction - the delivery to be processed
  * @transaction
  */
-function shipPackage(shipping) {
+function shipPackage(shipTransaction) {
     var factory = getFactory();
     
-    var record = factory.newResource('org.e599.model', 'VisibilityRecord', shipping.transactionId);
-    record.sscc = shipping.shipment.sscc;
-    record.gtin = shipping.shipment.container.gtin;
-    record.gln = shipping.shipment.sendFrom.gln;
+    var packages = [];
+    shipTransaction.container.packages.forEach(
+        function(package) {
+            packages.push(package.SGTIN);
+    });
+
+    var record = factory.newResource('org.e599.model', 'VisibilityRecord', shipTransaction.transactionId);
+    record.SSCC = shipTransaction.container.SSCC;
+    record.GTIN = shipTransaction.container.GTIN;
+    record.GLN = shipTransaction.readPoint.GLN;
     record.eventType = 'ObjectEvent';
     record.businessStep = 'Shipping';
     record.action = "OBSERVE";
-    record.disposition = "in_process";
-    record.eventTime = shipping.timestamp;
+    record.disposition = "in_transit";
+    record.eventTime = shipTransaction.timestamp;
+    record.locationText = shipTransaction.readPoint.address;
+    record.SGTINs = packages;
+
 
     getAssetRegistry('org.e599.model.VisibilityRecord')
-        .then(function (assetRegistry) {
-            assetRegistry.add(record);
-        });
+    .then(function (assetRegistry) {
+        assetRegistry.add(record);
+    });
 
     var event = factory.newEvent('org.e599.model', 'VisibilityEvent');
     event.record = record;
     emit(event);
 
-    return getAssetRegistry('org.e599.model.Container')
-        .then(function (assetRegistry) {
-            return assetRegistry.update(shipping.shipment.container);
-        });
+    return getAssetRegistry('org.e599.model.ShippingContainer')
+    .then(function (assetRegistry) {
+        return assetRegistry.update(shipTransaction.container);
+    });
 }
 
 /**
  * Track the delivery of a package from one partner to another
- * @param {org.e599.model.ReceiveTransaction} delivery - the delivery to be processed
+ * @param {org.e599.model.ReceiveTransaction} receiveTransaction - the delivery to be processed
  * @transaction
  */
-function receivePackage(delivery) {
+function receivePackage(receiveTransaction) {
     var factory = getFactory();
 
-    delivery.shipment.container.currentLocation = delivery.shipment.sendTo;
+    receiveTransaction.container.currentLocation = receiveTransaction.readPoint;
     
-    var record = factory.newResource('org.e599.model', 'VisibilityRecord', delivery.transactionId);
-    record.sscc = delivery.shipment.sscc;
-    record.gtin = delivery.shipment.container.gtin;
-    record.gln = delivery.shipment.sendTo.gln;
+    var record = factory.newResource('org.e599.model', 'VisibilityRecord', receiveTransaction.transactionId);
+    record.SSCC = receiveTransaction.container.SSCC;
+    record.GTIN = receiveTransaction.container.GTIN;
+    record.GLN = receiveTransaction.readPoint.GLN;
     record.eventType = 'ObjectEvent';
     record.businessStep = 'Receiving';
     record.action = "OBSERVE";
     record.disposition = "in_process";
-    record.eventTime = delivery.timestamp;
+    record.eventTime = receiveTransaction.timestamp;
 
     getAssetRegistry('org.e599.model.VisibilityRecord')
         .then(function (assetRegistry) {
@@ -78,8 +103,8 @@ function receivePackage(delivery) {
     event.record = record;
     emit(event);
 
-    return getAssetRegistry('org.e599.model.Container')
-        .then(function (assetRegistry) {
-            return assetRegistry.update(delivery.shipment.container);
-        });
+    return getAssetRegistry('org.e599.model.ShippingContainer')
+    .then(function (assetRegistry) {
+        return assetRegistry.update(receiveTransaction.container);
+    });
 }

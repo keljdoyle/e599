@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ContainerService } from './Container.service';
+import { ShippingContainerService } from './ShippingContainer.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
-	selector: 'app-Container',
-	templateUrl: './Container.component.html',
-	styleUrls: ['./Container.component.css'],
-  providers: [ContainerService]
+	selector: 'app-ShippingContainer',
+	templateUrl: './ShippingContainer.component.html',
+	styleUrls: ['./ShippingContainer.component.css'],
+  providers: [ShippingContainerService]
 })
-export class ContainerComponent implements OnInit {
+export class ShippingContainerComponent implements OnInit {
 
   myForm: FormGroup;
 
@@ -19,7 +19,11 @@ export class ContainerComponent implements OnInit {
 
   
       
-          gtin = new FormControl("", Validators.required);
+          SSCC = new FormControl("", Validators.required);
+        
+  
+      
+          GTIN = new FormControl("", Validators.required);
         
   
       
@@ -30,13 +34,21 @@ export class ContainerComponent implements OnInit {
           packages = new FormControl("", Validators.required);
         
   
+      
+          product = new FormControl("", Validators.required);
+        
+  
 
 
-  constructor(private serviceContainer:ContainerService, fb: FormBuilder) {
+  constructor(private serviceShippingContainer:ShippingContainerService, fb: FormBuilder) {
     this.myForm = fb.group({
     
         
-          gtin:this.gtin,
+          SSCC:this.SSCC,
+        
+    
+        
+          GTIN:this.GTIN,
         
     
         
@@ -44,7 +56,11 @@ export class ContainerComponent implements OnInit {
         
     
         
-          packages:this.packages
+          packages:this.packages,
+        
+    
+        
+          product:this.product
         
     
     });
@@ -56,7 +72,7 @@ export class ContainerComponent implements OnInit {
 
   loadAll(): Promise<any> {
     let tempList = [];
-    return this.serviceContainer.getAll()
+    return this.serviceShippingContainer.getAll()
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
@@ -105,10 +121,14 @@ export class ContainerComponent implements OnInit {
 
   addAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.Container",
+      $class: "org.e599.model.ShippingContainer",
       
         
-          "gtin":this.gtin.value,
+          "SSCC":this.SSCC.value,
+        
+      
+        
+          "GTIN":this.GTIN.value,
         
       
         
@@ -116,7 +136,11 @@ export class ContainerComponent implements OnInit {
         
       
         
-          "packages":this.packages.value
+          "packages":this.packages.value,
+        
+      
+        
+          "product":this.product.value
         
       
     };
@@ -124,7 +148,11 @@ export class ContainerComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "gtin":null,
+          "SSCC":null,
+        
+      
+        
+          "GTIN":null,
         
       
         
@@ -132,19 +160,27 @@ export class ContainerComponent implements OnInit {
         
       
         
-          "packages":null
+          "packages":null,
+        
+      
+        
+          "product":null
         
       
     });
 
-    return this.serviceContainer.addAsset(this.asset)
+    return this.serviceShippingContainer.addAsset(this.asset)
     .toPromise()
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
       
         
-          "gtin":null,
+          "SSCC":null,
+        
+      
+        
+          "GTIN":null,
         
       
         
@@ -152,7 +188,11 @@ export class ContainerComponent implements OnInit {
         
       
         
-          "packages":null 
+          "packages":null,
+        
+      
+        
+          "product":null 
         
       
       });
@@ -170,9 +210,15 @@ export class ContainerComponent implements OnInit {
 
    updateAsset(form: any): Promise<any> {
     this.asset = {
-      $class: "org.e599.model.Container",
+      $class: "org.e599.model.ShippingContainer",
       
         
+          
+        
+    
+        
+          
+            "GTIN":this.GTIN.value,
           
         
     
@@ -184,13 +230,19 @@ export class ContainerComponent implements OnInit {
     
         
           
-            "packages":this.packages.value
+            "packages":this.packages.value,
+          
+        
+    
+        
+          
+            "product":this.product.value
           
         
     
     };
 
-    return this.serviceContainer.updateAsset(form.get("gtin").value,this.asset)
+    return this.serviceShippingContainer.updateAsset(form.get("SSCC").value,this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -211,7 +263,7 @@ export class ContainerComponent implements OnInit {
 
   deleteAsset(): Promise<any> {
 
-    return this.serviceContainer.deleteAsset(this.currentId)
+    return this.serviceShippingContainer.deleteAsset(this.currentId)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -235,14 +287,18 @@ export class ContainerComponent implements OnInit {
 
   getForm(id: any): Promise<any>{
 
-    return this.serviceContainer.getAsset(id)
+    return this.serviceShippingContainer.getAsset(id)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
         
           
-            "gtin":null,
+            "SSCC":null,
+          
+        
+          
+            "GTIN":null,
           
         
           
@@ -250,7 +306,11 @@ export class ContainerComponent implements OnInit {
           
         
           
-            "packages":null 
+            "packages":null,
+          
+        
+          
+            "product":null 
           
         
       };
@@ -258,12 +318,20 @@ export class ContainerComponent implements OnInit {
 
 
       
-        if(result.gtin){
+        if(result.SSCC){
           
-            formObject.gtin = result.gtin;
+            formObject.SSCC = result.SSCC;
           
         }else{
-          formObject.gtin = null;
+          formObject.SSCC = null;
+        }
+      
+        if(result.GTIN){
+          
+            formObject.GTIN = result.GTIN;
+          
+        }else{
+          formObject.GTIN = null;
         }
       
         if(result.currentLocation){
@@ -280,6 +348,14 @@ export class ContainerComponent implements OnInit {
           
         }else{
           formObject.packages = null;
+        }
+      
+        if(result.product){
+          
+            formObject.product = result.product;
+          
+        }else{
+          formObject.product = null;
         }
       
 
@@ -304,7 +380,11 @@ export class ContainerComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "gtin":null,
+          "SSCC":null,
+        
+      
+        
+          "GTIN":null,
         
       
         
@@ -312,7 +392,11 @@ export class ContainerComponent implements OnInit {
         
       
         
-          "packages":null 
+          "packages":null,
+        
+      
+        
+          "product":null 
         
       
       });

@@ -7,28 +7,28 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Configuration } from '../configuration';
 import { DataService } from '../data.service';
-import { ShipmentComponent } from './Shipment.component';
-import {ShipmentService} from './Shipment.service';
-describe('ShipmentComponent', () => {
-  let component: ShipmentComponent;
-  let fixture: ComponentFixture<ShipmentComponent>;
+import { ItemComponent } from './Item.component';
+import {ItemService} from './Item.service';
+describe('ItemComponent', () => {
+  let component: ItemComponent;
+  let fixture: ComponentFixture<ItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShipmentComponent ],
+      declarations: [ ItemComponent ],
 imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule
   ],
-providers: [ShipmentService,DataService,Configuration]
+providers: [ItemService,DataService,Configuration]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShipmentComponent);
+    fixture = TestBed.createComponent(ItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -19,7 +19,7 @@ export class LocationComponent implements OnInit {
 
   
       
-          gln = new FormControl("", Validators.required);
+          GLN = new FormControl("", Validators.required);
         
   
       
@@ -36,7 +36,7 @@ export class LocationComponent implements OnInit {
     this.myForm = fb.group({
     
         
-          gln:this.gln,
+          GLN:this.GLN,
         
     
         
@@ -108,7 +108,7 @@ export class LocationComponent implements OnInit {
       $class: "org.e599.model.Location",
       
         
-          "gln":this.gln.value,
+          "GLN":this.GLN.value,
         
       
         
@@ -124,7 +124,7 @@ export class LocationComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "gln":null,
+          "GLN":null,
         
       
         
@@ -144,7 +144,7 @@ export class LocationComponent implements OnInit {
       this.myForm.setValue({
       
         
-          "gln":null,
+          "GLN":null,
         
       
         
@@ -190,7 +190,7 @@ export class LocationComponent implements OnInit {
     
     };
 
-    return this.serviceLocation.updateAsset(form.get("gln").value,this.asset)
+    return this.serviceLocation.updateAsset(form.get("GLN").value,this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -242,7 +242,7 @@ export class LocationComponent implements OnInit {
       let formObject = {
         
           
-            "gln":null,
+            "GLN":null,
           
         
           
@@ -258,12 +258,12 @@ export class LocationComponent implements OnInit {
 
 
       
-        if(result.gln){
+        if(result.GLN){
           
-            formObject.gln = result.gln;
+            formObject.GLN = result.GLN;
           
         }else{
-          formObject.gln = null;
+          formObject.GLN = null;
         }
       
         if(result.address){
@@ -304,7 +304,7 @@ export class LocationComponent implements OnInit {
     this.myForm.setValue({
       
         
-          "gln":null,
+          "GLN":null,
         
       
         

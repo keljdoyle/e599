@@ -15,53 +15,62 @@ import {Event} from './org.hyperledger.composer.system';
       productName: string;
       manufacturer: SupplyChainPartner;
    }
-   export class Container extends Asset {
-      gtin: string;
-      currentLocation: Location;
-      packages: IndividualPackage[];
-   }
-   export class IndividualPackage extends Asset {
-      gtin: string;
+   export class Item extends Asset {
+      GTIN: string;
       unitCount: number;
       dosage: number;
       unit: string;
       product: Product;
+   }
+   export class ShippingContainer extends Asset {
+      SSCC: string;
+      GTIN: string;
+      currentLocation: Location;
+      packages: IndividualPackage[];
+      product: Product;
+   }
+   export class IndividualPackage extends Asset {
+      SGTIN: string;
+      item: Item;
       batch: Batch;
+      currentLocation: Location;
    }
    export class Location extends Asset {
-      gln: string;
+      GLN: string;
       address: string;
       company: SupplyChainPartner;
-   }
-   export class Shipment extends Asset {
-      sscc: string;
-      container: Container;
-      sendFrom: Location;
-      sendTo: Location;
-      shipper: SupplyChainPartner;
    }
    export class SupplyChainPartner extends Participant {
       partnerId: string;
       companyName: string;
    }
-   export class GoodsIssued extends Asset {
-      sscc: string;
-      gtin: string;
-      gln: string;
+   export class VisibilityRecord extends Asset {
+      transactionId: string;
+      SSCC: string;
+      GTIN: string;
+      GLN: string;
+      SGTINs: string[];
+      eventType: string;
+      businessStep: string;
+      action: string;
+      disposition: string;
+      locationText: string;
+      eventTime: Date;
    }
-   export class GoodsReceived extends Asset {
-      sscc: string;
-      gtin: string;
-      gln: string;
+   export class ShipTransaction extends Transaction {
+      container: ShippingContainer;
+      readPoint: Location;
    }
-   export class DeliveryTransaction extends Transaction {
-      shipment: Shipment;
+   export class ReceiveTransaction extends Transaction {
+      container: ShippingContainer;
+      readPoint: Location;
    }
    export class PackageTransaction extends Transaction {
-      container: Container;
+      container: ShippingContainer;
       contents: IndividualPackage[];
+      readPoint: Location;
    }
-   export class ShipmentNotification extends Event {
-      shipment: Shipment;
+   export class VisibilityEvent extends Event {
+      record: VisibilityRecord;
    }
 // }
