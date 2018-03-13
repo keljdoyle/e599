@@ -2,19 +2,20 @@ query selectProductByName {
   description: "Find a product by name."
   statement:
       SELECT org.e599.model.Product
-          WHERE (productName == _$productName)
+      WHERE (productName == _$productName)
 }
 
 query selectVisibilityEventBySSCC {
   description: "Find records by package identifier."
   statement:
       SELECT org.e599.model.VisibilityRecord
-          WHERE (SSCC == _$SSCC)
+      WHERE (SSCC == _$SSCC)
 }
 
 query selectVisibilityEventBySGTIN {
   description: "Find records by SGTIN."
   statement:
       SELECT org.e599.model.VisibilityRecord
-          WHERE (SGTINs CONTAINS _$SGTIN)
+      WHERE (SGTINs CONTAINS _$SGTIN)
+      ORDER BY [eventTime ASC]
 }

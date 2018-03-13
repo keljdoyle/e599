@@ -16,24 +16,31 @@ export class VisibilityRecordComponent implements OnInit {
   private allAssets;
   private asset;
   private currentId;
-	private errorMessage;
+  private errorMessage;
+  private currentAsset;
 
-          transactionId = new FormControl("", Validators.required);
-          SSCC = new FormControl("", Validators.required);
-          GTIN = new FormControl("", Validators.required);
-          GLN = new FormControl("", Validators.required);
-          SGTINs = new FormControl("", Validators.required);
-          eventType = new FormControl("", Validators.required);
-          businessStep = new FormControl("", Validators.required);
-          action = new FormControl("", Validators.required);
-          disposition = new FormControl("", Validators.required);
-          locationText = new FormControl("", Validators.required);
-          eventTime = new FormControl("", Validators.required);
-        
+  /*
+  transactionId = new FormControl("", Validators.required);
+  SSCC = new FormControl("", Validators.required);
+  GTIN = new FormControl("", Validators.required);
+  GLN = new FormControl("", Validators.required);
+  SGTINs = new FormControl("", Validators.required);
+  eventType = new FormControl("", Validators.required);
+  businessStep = new FormControl("", Validators.required);
+  action = new FormControl("", Validators.required);
+  disposition = new FormControl("", Validators.required);
+  locationText = new FormControl("", Validators.required);
+  eventTime = new FormControl("", Validators.required);
+*/
+
+  private sgtinSearch: string = '';
+  searchBy: string = 'SGTIN';
+
   constructor(
     private serviceVisibilityRecord:VisibilityRecordService,
     private queryService:QueryService,
     fb: FormBuilder) {
+      /*
     this.myForm = fb.group({
           transactionId:this.transactionId,
           SSCC:this.SSCC,
@@ -47,6 +54,7 @@ export class VisibilityRecordComponent implements OnInit {
           locationText:this.locationText,
           eventTime:this.eventTime
     });
+    */
   };
 
   ngOnInit(): void {
@@ -55,7 +63,12 @@ export class VisibilityRecordComponent implements OnInit {
 
   loadBySgtin(): Promise<any> {
     let tempList = [];
-    return this.queryService.getBySgtin('GTIN-0001-0001')
+
+    if (!this.sgtinSearch) {
+      return;
+    }
+
+    return this.queryService.getRecords(this.sgtinSearch, this.searchBy)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
@@ -126,276 +139,6 @@ export class VisibilityRecordComponent implements OnInit {
     return this[name].value.indexOf(value) !== -1;
   }
 
-  addAsset(form: any): Promise<any> {
-    this.asset = {
-      $class: "org.e599.model.VisibilityRecord",
-      
-        
-          "transactionId":this.transactionId.value,
-        
-      
-        
-          "SSCC":this.SSCC.value,
-        
-      
-        
-          "GTIN":this.GTIN.value,
-        
-      
-        
-          "GLN":this.GLN.value,
-        
-      
-        
-          "SGTINs":this.SGTINs.value,
-        
-      
-        
-          "eventType":this.eventType.value,
-        
-      
-        
-          "businessStep":this.businessStep.value,
-        
-      
-        
-          "action":this.action.value,
-        
-      
-        
-          "disposition":this.disposition.value,
-        
-      
-        
-          "locationText":this.locationText.value,
-        
-      
-        
-          "eventTime":this.eventTime.value
-        
-      
-    };
-
-    this.myForm.setValue({
-      
-        
-          "transactionId":null,
-        
-      
-        
-          "SSCC":null,
-        
-      
-        
-          "GTIN":null,
-        
-      
-        
-          "GLN":null,
-        
-      
-        
-          "SGTINs":null,
-        
-      
-        
-          "eventType":null,
-        
-      
-        
-          "businessStep":null,
-        
-      
-        
-          "action":null,
-        
-      
-        
-          "disposition":null,
-        
-      
-        
-          "locationText":null,
-        
-      
-        
-          "eventTime":null
-        
-      
-    });
-
-    return this.serviceVisibilityRecord.addAsset(this.asset)
-    .toPromise()
-    .then(() => {
-			this.errorMessage = null;
-      this.myForm.setValue({
-      
-        
-          "transactionId":null,
-        
-      
-        
-          "SSCC":null,
-        
-      
-        
-          "GTIN":null,
-        
-      
-        
-          "GLN":null,
-        
-      
-        
-          "SGTINs":null,
-        
-      
-        
-          "eventType":null,
-        
-      
-        
-          "businessStep":null,
-        
-      
-        
-          "action":null,
-        
-      
-        
-          "disposition":null,
-        
-      
-        
-          "locationText":null,
-        
-      
-        
-          "eventTime":null 
-        
-      
-      });
-    })
-    .catch((error) => {
-        if(error == 'Server error'){
-            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-        }
-        else{
-            this.errorMessage = error;
-        }
-    });
-  }
-
-
-   updateAsset(form: any): Promise<any> {
-    this.asset = {
-      $class: "org.e599.model.VisibilityRecord",
-      
-        
-          
-        
-    
-        
-          
-            "SSCC":this.SSCC.value,
-          
-        
-    
-        
-          
-            "GTIN":this.GTIN.value,
-          
-        
-    
-        
-          
-            "GLN":this.GLN.value,
-          
-        
-    
-        
-          
-            "SGTINs":this.SGTINs.value,
-          
-        
-    
-        
-          
-            "eventType":this.eventType.value,
-          
-        
-    
-        
-          
-            "businessStep":this.businessStep.value,
-          
-        
-    
-        
-          
-            "action":this.action.value,
-          
-        
-    
-        
-          
-            "disposition":this.disposition.value,
-          
-        
-    
-        
-          
-            "locationText":this.locationText.value,
-          
-        
-    
-        
-          
-            "eventTime":this.eventTime.value
-          
-        
-    
-    };
-
-    return this.serviceVisibilityRecord.updateAsset(form.get("transactionId").value,this.asset)
-		.toPromise()
-		.then(() => {
-			this.errorMessage = null;
-		})
-		.catch((error) => {
-            if(error == 'Server error'){
-				this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-			}
-            else if(error == '404 - Not Found'){
-				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
-			}
-			else{
-				this.errorMessage = error;
-			}
-    });
-  }
-
-
-  deleteAsset(): Promise<any> {
-
-    return this.serviceVisibilityRecord.deleteAsset(this.currentId)
-		.toPromise()
-		.then(() => {
-			this.errorMessage = null;
-		})
-		.catch((error) => {
-            if(error == 'Server error'){
-				this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-			}
-			else if(error == '404 - Not Found'){
-				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
-			}
-			else{
-				this.errorMessage = error;
-			}
-    });
-  }
-
   setId(id: any): void{
     this.currentId = id;
   }
@@ -405,110 +148,62 @@ export class VisibilityRecordComponent implements OnInit {
     return this.serviceVisibilityRecord.getAsset(id)
     .toPromise()
     .then((result) => {
-			this.errorMessage = null;
+      this.errorMessage = null;
+      
+      this.currentAsset = result;
+      /*
       let formObject = {
-        
-          
             "transactionId":null,
-          
-        
-          
             "SSCC":null,
-          
-        
-          
             "GTIN":null,
-          
-        
-          
             "GLN":null,
-          
-        
-          
             "SGTINs":null,
-          
-        
-          
             "eventType":null,
-          
-        
-          
             "businessStep":null,
-          
-        
-          
             "action":null,
-          
-        
-          
             "disposition":null,
-          
-        
-          
             "locationText":null,
-          
-        
-          
-            "eventTime":null 
-          
-        
+            "eventTime":null
       };
 
-
-
-      
         if(result.transactionId){
-          
             formObject.transactionId = result.transactionId;
-          
         }else{
           formObject.transactionId = null;
         }
       
         if(result.SSCC){
-          
             formObject.SSCC = result.SSCC;
-          
         }else{
           formObject.SSCC = null;
         }
       
         if(result.GTIN){
-          
             formObject.GTIN = result.GTIN;
-          
         }else{
           formObject.GTIN = null;
         }
       
         if(result.GLN){
-          
             formObject.GLN = result.GLN;
-          
         }else{
           formObject.GLN = null;
         }
       
         if(result.SGTINs){
-          
             formObject.SGTINs = result.SGTINs;
-          
         }else{
           formObject.SGTINs = null;
         }
       
         if(result.eventType){
-          
             formObject.eventType = result.eventType;
-          
         }else{
           formObject.eventType = null;
         }
       
         if(result.businessStep){
-          
             formObject.businessStep = result.businessStep;
-          
         }else{
           formObject.businessStep = null;
         }
@@ -522,32 +217,26 @@ export class VisibilityRecordComponent implements OnInit {
         }
       
         if(result.disposition){
-          
             formObject.disposition = result.disposition;
-          
         }else{
           formObject.disposition = null;
         }
       
         if(result.locationText){
-          
             formObject.locationText = result.locationText;
-          
         }else{
           formObject.locationText = null;
         }
       
         if(result.eventTime){
-          
             formObject.eventTime = result.eventTime;
-          
         }else{
           formObject.eventTime = null;
         }
       
 
       this.myForm.setValue(formObject);
-
+        */
     })
     .catch((error) => {
         if(error == 'Server error'){
@@ -566,50 +255,17 @@ export class VisibilityRecordComponent implements OnInit {
   resetForm(): void{
     this.myForm.setValue({
       
-        
           "transactionId":null,
-        
-      
-        
           "SSCC":null,
-        
-      
-        
           "GTIN":null,
-        
-      
-        
           "GLN":null,
-        
-      
-        
           "SGTINs":null,
-        
-      
-        
           "eventType":null,
-        
-      
-        
           "businessStep":null,
-        
-      
-        
           "action":null,
-        
-      
-        
           "disposition":null,
-        
-      
-        
           "locationText":null,
-        
-      
-        
-          "eventTime":null 
-        
-      
+          "eventTime":null
       });
   }
 

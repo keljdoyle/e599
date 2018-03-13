@@ -62,18 +62,35 @@ participant SupplyChainPartner identified by partnerId {
  */
 asset VisibilityRecord identified by transactionId {
   o String transactionId
+  o String GLN
   o String SSCC optional
   o String GTIN optional
-  o String GLN
   o String[] SGTINs optional
   o String eventType
   o String businessStep
   o String action
   o String disposition
   o String locationText optional
+  o String productText optional
+  o String itemText optional
+  o String supplyChainPartnerText optional
   o DateTime eventTime
 }
 
+/**
+  This transaction is executed when individual packages are added to a container.
+ */
+transaction PackageTransaction {
+    --> ShippingContainer container
+    --> IndividualPackage[] contents
+    --> Location readPoint
+}
+
+transaction UnpackTransaction {
+    --> ShippingContainer container
+    --> IndividualPackage[] contents optional /* for unpacking specific items */
+    --> Location readPoint
+}
 
 /**
   This transaction is executed when a container is shipped.
@@ -91,15 +108,10 @@ transaction ReceiveTransaction {
     --> Location readPoint
 }
 
-/**
-  This transaction is executed when individual packages are added to a container.
- */
-transaction PackageTransaction {
-    --> ShippingContainer container
-    --> IndividualPackage[] contents
-    --> Location readPoint
+event VisibilityEvent {
+    --> VisibilityRecord record
 }
 
-event VisibilityEvent {
+event MixedPackingEvent {
     --> VisibilityRecord record
 }

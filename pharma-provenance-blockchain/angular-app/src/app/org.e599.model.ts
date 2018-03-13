@@ -56,7 +56,10 @@ import {Event} from './org.hyperledger.composer.system';
       disposition: string;
       locationText: string;
       eventTime: Date;
+      productText: string;
+      itemText: string;
    }
+   
    export class ShipTransaction extends Transaction {
       container: ShippingContainer;
       readPoint: Location;
