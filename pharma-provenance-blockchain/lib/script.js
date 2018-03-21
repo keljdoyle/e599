@@ -10,20 +10,16 @@ function packageContainer(packageTransaction) {
     packageTransaction.container.packages = packageTransaction.contents;
     packageTransaction.container.currentLocation = packageTransaction.readPoint;
 
-    getAssetRegistry('org.e599.model.ShippingContainer')
-    .then(function (assetRegistry) {
-        assetRegistry.update(packageTransaction.container);
-    });
-
     var record = factory.newResource('org.e599.model', 'VisibilityRecord', packageTransaction.transactionId);
     record.SSCC = packageTransaction.container.SSCC;
-    record.GTIN = packageTransaction.container.GTIN;
     record.GLN = packageTransaction.container.currentLocation.GLN;
     record.eventType = 'AggregateEvent';
     record.businessStep = 'Packing';
     record.action = "ADD";
     record.disposition = "in_progress";
-    record.eventTime = packageTransaction.timestamp;
+    record.eventTime = (packageTransaction.eventTime) ? 
+        packageTransaction.eventTime :
+        packageTransaction.timestamp;
     record.locationText = packageTransaction.container.currentLocation.address;
     record.supplyChainPartnerText = packageTransaction.readPoint.company.companyName;
 
@@ -33,6 +29,11 @@ function packageContainer(packageTransaction) {
         event.record = record;
         emit(event);
     }
+
+    getAssetRegistry('org.e599.model.ShippingContainer')
+    .then(function (assetRegistry) {
+        assetRegistry.update(packageTransaction.container);
+    });
 
     return getAssetRegistry('org.e599.model.VisibilityRecord')
     .then(function (assetRegistry) {
@@ -48,17 +49,8 @@ function packageContainer(packageTransaction) {
 function unpackContainer(transaction) {
     var factory = getFactory();
 
-    transaction.container.packages = [];
-    transaction.container.currentLocation = transaction.readPoint;
-
-    getAssetRegistry('org.e599.model.ShippingContainer')
-    .then(function (assetRegistry) {
-        assetRegistry.update(packageTransaction.container);
-    });
-
     var record = factory.newResource('org.e599.model', 'VisibilityRecord', transaction.transactionId);
     record.SSCC = transaction.container.SSCC;
-    record.GTIN = transaction.container.GTIN;
     record.GLN = transaction.container.currentLocation.GLN;
     record.eventType = 'AggregateEvent';
     record.businessStep = 'Unpacking';
@@ -70,6 +62,14 @@ function unpackContainer(transaction) {
 
     getChildData(transaction.container, record);
 
+    transaction.container.packages = [];
+    transaction.container.currentLocation = transaction.readPoint;
+
+    getAssetRegistry('org.e599.model.ShippingContainer')
+    .then(function (assetRegistry) {
+        assetRegistry.update(packageTransaction.container);
+    });
+    
     return getAssetRegistry('org.e599.model.VisibilityRecord')
     .then(function (assetRegistry) {
         assetRegistry.add(record);
@@ -80,6 +80,8 @@ function getChildData(container, record) {
     var product = null;
     var packages = [];
     var item = null;
+    var GTIN = null;
+
     container.packages.forEach(
         function(package) {
             package.currentLocation = container.currentLocation;
@@ -87,16 +89,19 @@ function getChildData(container, record) {
             if (package.item.product.productName !== product) {
                 if (product === null) {
                     product = package.item.product.productName
-                    item = package.item.dosage + ' ' + package.item.unit;
+                    item = package.item.dosage + package.item.unit + ' (' + package.item.unitCount + ' ct)';
+                    GTIN = package.item.GTIN;
                 } else {
                     product = 'MIXED';
                     item = 'MIXED';
+                    GTIN = 'MIXED';
                 }
             }
     });
     record.SGTINs = packages;
     record.productText = product;
     record.itemText = item;
+    record.GTIN = GTIN;
 
     return getAssetRegistry('org.e599.model.IndividualPackage')
     .then(function (assetRegistry) {
@@ -122,7 +127,6 @@ function shipPackage(shipTransaction) {
 
     var record = factory.newResource('org.e599.model', 'VisibilityRecord', shipTransaction.transactionId);
     record.SSCC = shipTransaction.container.SSCC;
-    record.GTIN = shipTransaction.container.GTIN;
     record.GLN = shipTransaction.readPoint.GLN;
     record.eventType = 'ObjectEvent';
     record.businessStep = 'Shipping';
@@ -161,7 +165,6 @@ function receivePackage(receiveTransaction) {
     
     var record = factory.newResource('org.e599.model', 'VisibilityRecord', receiveTransaction.transactionId);
     record.SSCC = receiveTransaction.container.SSCC;
-    record.GTIN = receiveTransaction.container.GTIN;
     record.GLN = receiveTransaction.readPoint.GLN;
     record.eventType = 'ObjectEvent';
     record.businessStep = 'Receiving';

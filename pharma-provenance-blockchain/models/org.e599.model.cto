@@ -1,7 +1,24 @@
 /**
- * Model file for Pharmaceuticals provenance
+ * Model file for Pharmaceuticals provenance for Harvard Extension e599 Capstone.
  */
 namespace org.e599.model
+
+participant SupplyChainPartner identified by partnerId {
+    o String partnerId
+    o String companyName
+}
+
+asset Location identified by GLN {
+    o String GLN
+    o String address
+	  --> SupplyChainPartner company
+}
+
+asset Product identified by productId {
+  	o String productId
+    o String productName
+	  --> SupplyChainPartner manufacturer
+}
 
 asset Batch identified by batchId {
   o String batchId
@@ -9,12 +26,6 @@ asset Batch identified by batchId {
   o DateTime expirationDate optional
   --> Location manufactureLocation
   --> Product product
-}
-
-asset Product identified by productId {
-  	o String productId
-    o String productName
-	  --> SupplyChainPartner manufacturer
 }
 
 /* Represents a specific product/package type. aka SKU */
@@ -29,10 +40,8 @@ asset Item identified by GTIN {
 /* a parcel, pallet, or shipping container */
 asset ShippingContainer identified by SSCC {
   	o String SSCC
-    o String GTIN
     --> Location currentLocation
     --> IndividualPackage[] packages optional
-    --> Product product optional
 }
 
 asset IndividualPackage identified by SGTIN {
@@ -41,18 +50,6 @@ asset IndividualPackage identified by SGTIN {
     --> Batch batch
     --> Location currentLocation optional
 }
-
-asset Location identified by GLN {
-    o String GLN
-    o String address
-	  --> SupplyChainPartner company
-}
-
-participant SupplyChainPartner identified by partnerId {
-    o String partnerId
-    o String companyName
-}
-
 
 /**
   The VisibilityRecord assets are created to store searchable records of the supply chain lifecycle.
@@ -84,6 +81,7 @@ transaction PackageTransaction {
     --> ShippingContainer container
     --> IndividualPackage[] contents
     --> Location readPoint
+    o DateTime eventTime optional
 }
 
 transaction UnpackTransaction {

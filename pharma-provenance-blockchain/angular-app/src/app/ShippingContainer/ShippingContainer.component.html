@@ -3,64 +3,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addAssetModalLabel">Add Asset</h4>
+        <h4 class="modal-title" id="addAssetModalLabel">Add Container</h4>
       </div>
       <form [formGroup]="myForm">
         <div class="modal-body">
 
-
-          
-
-            
               <div class="form-group text-left">
                 <label for="SSCC">SSCC</label>
-                
                   <input formControlName="SSCC" type="text" class="form-control">
-                
               </div>
             
-          
-
-            
               <div class="form-group text-left">
-                <label for="GTIN">GTIN</label>
-                
-                  <input formControlName="GTIN" type="text" class="form-control">
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="currentLocation">currentLocation</label>
-                
+                <label for="currentLocation">Current Location</label>
                     <textarea formControlName="currentLocation" class="form-control" rows="3"></textarea>
-                
               </div>
-            
-          
-
             
               <div class="form-group text-left">
                 <label for="packages">packages</label>
-                
                     <textarea formControlName="packages" class="form-control" rows="3"></textarea>
-                
               </div>
-            
           
-
-            
-              <div class="form-group text-left">
-                <label for="product">product</label>
-                
-                    <textarea formControlName="product" class="form-control" rows="3"></textarea>
-                
-              </div>
-            
-          
-
         </div>
         <div class="modal-footer">
           <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
@@ -79,65 +41,35 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="updateAssetModalLabel">Update Asset</h4>
+        <h4 class="modal-title" id="updateAssetModalLabel">Container Received</h4>
       </div>
       <form [formGroup]="myForm">
         <div class="modal-body">
 
-
-          
             <div class="form-group text-left">
               <label for="SSCC">SSCC</label>
-
-              
                 <input [ngModel]="SSCC"formControlName="SSCC" type="text" class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="GTIN">GTIN</label>
+              <label for="packages">Packages</label>
 
+              <span>
+                {{packagesText}}
+                <textarea [ngModel]="packagesText" formControlName="packagesText" class="form-control" rows="3"></textarea>
+              </span>
               
-                <input [ngModel]="GTIN"formControlName="GTIN" type="text" class="form-control">
-              
-
             </div>
-          
+        
             <div class="form-group text-left">
-              <label for="currentLocation">currentLocation</label>
-
-              
-                
-                  <textarea [ngModel]="currentLocation" formControlName="currentLocation" class="form-control" rows="3"></textarea>
-                
-              
-
+                <label for="currentLocation">Received at:</label> <br>
+                <select id="Id" #Id="ngModel"  [(ngModel)]="selectedLocation" name="Id">  
+                    <option selected="" value="">Select</option>  
+                        <option [ngValue]="k.GLN" *ngFor="let k of locations">  
+                            ({{k.GLN}})  {{k.address}}
+                      </option>  
+                </select>  
             </div>
-          
-            <div class="form-group text-left">
-              <label for="packages">packages</label>
-
-              
-                
-                  <textarea [ngModel]="packages" formControlName="packages" class="form-control" rows="3"></textarea>
-                
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="product">product</label>
-
-              
-                
-                  <textarea [ngModel]="product" formControlName="product" class="form-control" rows="3"></textarea>
-                
-              
-
-            </div>
-          
-
 
         </div>
         <div class="modal-footer">
@@ -150,45 +82,14 @@
 </div>
 
 
-
-<div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteAssetModalLabel">Delete Asset</h4>
-      </div>
-      <form [formGroup]="myForm" (ngSubmit)="deleteAsset()">
-        <div class="modal-body">
-          Are you sure you want to delete this asset?
-        </div>
-        <div class="modal-footer">
-          <button (click)="deleteAsset()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
 <div class="container">
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<strong>Error:</strong> {{errorMessage}}
 	</div>
-  <h1 id='assetName'>Shipping Container</h1>
+  <h1 id='assetName'>Shipping Containers</h1>
   <div class="row">
     <div class="col-md-12 text-right">
-      <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Asset</button>
+      <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Container</button>
     </div>
   </div>
   <br>
@@ -200,13 +101,9 @@
             
                 <th class="info">SSCC</th>
             
-                <th class="info">GTIN</th>
-            
-                <th class="info">currentLocation</th>
+                <th class="info">Last Known Location</th>
             
                 <th class="info">packages</th>
-            
-                <th class="info">product</th>
             
               <th class="info">Actions</th>
           </tr>
@@ -214,21 +111,16 @@
         <tbody>
           <tr *ngFor="let asset of allAssets">
 
-            
                 <td>{{asset.SSCC}}</td>
             
-                <td>{{asset.GTIN}}</td>
+                <td>{{asset.locationText}}</td>
             
-                <td>{{asset.currentLocation}}</td>
-            
-                <td>{{asset.packages}}</td>
-            
-                <td>{{asset.product}}</td>
+                <td>{{asset.packagesText}}</td>
             
             <td>
-              <button (click)="getForm(asset.SSCC);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
-
-              <button (click)="setId(asset.SSCC);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
+              <button (click)="setId(asset.SSCC);" type="button" class="btn btn-success" data-toggle="modal" data-target="#deleteAssetModal">Shipped</button>
+          
+              <button (click)="getForm(asset.SSCC);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Received</button>
             </td>
           </tr>
         </tbody>

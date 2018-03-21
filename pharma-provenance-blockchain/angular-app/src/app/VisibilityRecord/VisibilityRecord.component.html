@@ -1,7 +1,4 @@
 
-
-
-
 <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -9,36 +6,62 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="updateAssetModalLabel">Visibiliy Event Details</h4>
+        <h4 class="modal-title" id="updateAssetModalLabel">Visibility Event Details</h4>
       </div>
 
       <form [formGroup]="myForm">
         <div class="modal-body">
-
+            <div class="row">
+                <div class="form-group text-left col-md-3">
+                    <label>Event Type:</label>
+                    {{currentAsset.eventType}}
+                </div>
+              
+                <div class="form-group text-left col-md-3">
+                  <label>Business Step:</label>
+                  {{currentAsset.businessStep}}
+                </div>
+              
+                <div class="form-group text-left col-md-3">
+                  <label>Action:</label><br>
+                  {{currentAsset.action}}
+                </div>
+  
+                <div class="form-group text-left col-md-3">
+                    <label>Disposition:</label>
+                    {{currentAsset.disposition}}
+                </div>
+            </div>
+            
             <div class="form-group text-left">
-              <label for="transactionId">Transaction Id:</label>
+              <label>Transaction Id:</label>
               {{currentAsset.transactionId}}
             </div>
 
             <div class="form-group text-left">
-              <label for="SSCC">SSCC:</label>
+              <label>Container (SSCC):</label>
               {{currentAsset.SSCC}}
             </div>
           
             <div class="form-group text-left">
-              <label for="GTIN">GTIN:</label>
+              <label>Trade Item (GTIN):</label>
               {{currentAsset.GTIN}}
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="locationText">Location:</label>
-              (GLN: {{currentAsset.GLN}}) {{currentAsset.locationText}}
             </div>
           
             <div class="form-group text-left">
                 <label for="locationText">Product / Item:</label>
                 {{currentAsset.productText}} {{currentAsset.itemText}}
-              </div>
+            </div>
+
+            <div class="form-group text-left">
+                <label for="locationText">Location:</label>
+                (GLN: {{currentAsset.GLN}}) {{currentAsset.locationText}}
+            </div>
+
+            <div class="form-group text-left">
+                <label for="locationText">Organization:</label>
+                {{currentAsset.supplyChainPartnerText}}
+            </div>
 
             <div class="form-group text-left">
               <label for="eventTime">Event Time:</label>
@@ -46,37 +69,11 @@
             </div>
           
             <div class="form-group text-left">
-                <label for="SGTINs">SGTINs:</label>
+                <label for="SGTINs">Individual Packages (SGTINs):</label>
                 <div class="pre-scrollable">
                     {{currentAsset.SGTINs}}
                 </div>
             </div>
-
-            <div class="modal-header">
-                <h4 class="modal-title" id="updateAssetModalLabel">EPCIS values</h4>
-                <div class="row">
-                    <div class="form-group text-left col-md-3">
-                        <label for="eventType">Event Type:</label>
-                        {{currentAsset.eventType}}
-                    </div>
-                  
-                    <div class="form-group text-left col-md-3">
-                      <label for="businessStep">Business Step:</label>
-                      {{currentAsset.businessStep}}
-                    </div>
-                  
-                    <div class="form-group text-left col-md-3">
-                      <label for="action">Action:</label><br>
-                      {{currentAsset.action}}
-                    </div>
-      
-                    <div class="form-group text-left col-md-3">
-                        <label for="action">Disposition:</label>
-                        {{currentAsset.disposition}}
-                    </div>
-                </div>
-            </div>
-
 
         </div>
         <div class="modal-footer">
@@ -92,7 +89,7 @@
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<strong>Error:</strong> {{errorMessage}}
 	</div>
-  <h1 id='assetName'>Visibility Events</h1>
+  <h1 id='assetName'>Drug Pedigree Search</h1>
   <div class="row">
     <div class="col-md-12 text-right">
       <!--
@@ -105,97 +102,85 @@
 
   <div class="row">
     <div class="col-md-6 form-inline">
+      <!--
       <label for="sgtinSearch">Search By: </label>
 
       <select [(ngModel)]="searchBy">
         <option value="SGTIN" selected="selected">SGTIN</option>
         <option value="SSCC">SSCC</option>
       </select>
-
+    -->
       <input [(ngModel)]="sgtinSearch" type="text" class="form-control">
       <button (click)="loadBySgtin()" type="button" class="btn btn-primary" >Find</button>
     </div>
   </div>
 
+  <div *ngIf="loaded" class="row sgtin-container">
+      <div class="col-md-12">
+          <h3>Pedigree Results for SGTIN: {{this.package.SGTIN}}</h3>
+
+          <div class="row">
+              <div class="col-md-6">
+                  <h4>Trade Item</h4>
+                <div>
+                    <label>GTIN: </label> {{this.item.GTIN}}
+                </div>
+                <div>
+                    <label>Product: </label> {{this.product.productName}}
+                </div>
+                <div>
+                    <label>Package: </label> {{this.itemText()}}
+                </div>
+                <div>
+                    <label>Manufacturer: </label> {{this.manufacturer.companyName}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <h4>Batch Details</h4>
+                <div>
+                    <label>Batch ID: </label> {{this.batch.batchId}}
+                </div>
+                <div>
+                    <label>Date: </label> {{this.batch.batchDate}}
+                </div>
+                <div>
+                    <label>Location: </label> {{this.batchLocation.address}} 
+                </div>
+              </div>
+          </div>
+          
+      </div>
+    
+  </div>
 
   <br>
+  <h3>Visibility Events</h3>
   <div class="row">
     <div class="col-md-12">
       <table class="table table-bordered table-responsive table-striped">
         <thead class="thead">
           <tr class="thead-cols">
-                <!--
-                <th class="info">transactionId</th>
-                -->
                 <th class="info">GLN</th>
-
                 <th class="info">SSCC</th>
-            
                 <th class="info">GTIN</th>
-            
                 <th class="info">Read Location</th>
-
                 <th class="info">Product</th>
-
                 <th class="info">Count</th>
-            
-                
-
-                <!--
-                <th class="info">eventType</th>
-                -->
-
                 <th class="info">Business Step</th>
-            
-                <!--
-                <th class="info">action</th>
-                
-
-                <th class="info">disposition</th>
-                  -->
-
-                
-            
                 <th class="info">Event Time</th>
-            
-                <!--  -->
                 <th class="info">Units / Details</th>
-                
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let asset of allAssets">
-
-              <!--
-                <td>{{asset.transactionId}}</td>
-              -->
                 <td>{{asset.GLN}}</td>
-
                 <td>{{asset.SSCC}}</td>
-            
                 <td>{{asset.GTIN}}</td>
-            
                 <td>{{asset.locationText}}</td>
-
                 <td>{{asset.productText}}</td>
-
                 <td>{{asset.SGTINs.length}}</td>
-                
-                <!--
-                <td>{{asset.eventType}}</td>
-                -->
-
                 <td>{{asset.businessStep}}</td>
-            
-                <!--
-                <td>{{asset.action}}</td>
-                
-
-                <td>{{asset.disposition}}</td>
-                  -->
-
-                
-            
                 <td>{{asset.eventTime}}</td>
             
 

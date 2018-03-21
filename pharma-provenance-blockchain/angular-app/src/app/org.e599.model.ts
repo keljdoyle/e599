@@ -22,13 +22,17 @@ import {Event} from './org.hyperledger.composer.system';
       unit: string;
       product: Product;
    }
+
    export class ShippingContainer extends Asset {
       SSCC: string;
       GTIN: string;
       currentLocation: Location;
       packages: IndividualPackage[];
       product: Product;
+      locationText: string;
+      packagesText: string;
    }
+
    export class IndividualPackage extends Asset {
       SGTIN: string;
       item: Item;
@@ -58,6 +62,7 @@ import {Event} from './org.hyperledger.composer.system';
       eventTime: Date;
       productText: string;
       itemText: string;
+      supplyChainPartnerText: string;
    }
    
    export class ShipTransaction extends Transaction {

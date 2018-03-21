@@ -1,12 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ShippingContainerService } from './ShippingContainer.service';
+import { LocationService } from '../Location/Location.service';
+
 import 'rxjs/add/operator/toPromise';
 @Component({
 	selector: 'app-ShippingContainer',
 	templateUrl: './ShippingContainer.component.html',
 	styleUrls: ['./ShippingContainer.component.css'],
-  providers: [ShippingContainerService]
+  providers: [ShippingContainerService, LocationService]
 })
 export class ShippingContainerComponent implements OnInit {
 
@@ -15,83 +17,95 @@ export class ShippingContainerComponent implements OnInit {
   private allAssets;
   private asset;
   private currentId;
-	private errorMessage;
+  private errorMessage;
+  private locations;
+  private selectedLocation;
 
-  
-      
-          SSCC = new FormControl("", Validators.required);
+  SSCC = new FormControl("", Validators.required);
+  currentLocation = new FormControl("", Validators.required);
+  packages = new FormControl("", Validators.required);
+  packagesText: string = '';
         
-  
-      
-          GTIN = new FormControl("", Validators.required);
-        
-  
-      
-          currentLocation = new FormControl("", Validators.required);
-        
-  
-      
-          packages = new FormControl("", Validators.required);
-        
-  
-      
-          product = new FormControl("", Validators.required);
-        
-  
-
-
-  constructor(private serviceShippingContainer:ShippingContainerService, fb: FormBuilder) {
+  constructor(
+    private serviceShippingContainer:ShippingContainerService, 
+    private serviceLocation:LocationService, 
+    fb: FormBuilder
+  ) {
     this.myForm = fb.group({
-    
-        
           SSCC:this.SSCC,
-        
-    
-        
-          GTIN:this.GTIN,
-        
-    
-        
           currentLocation:this.currentLocation,
-        
-    
-        
           packages:this.packages,
-        
-    
-        
-          product:this.product
-        
-    
+          packagesText:null
     });
   };
 
   ngOnInit(): void {
-    this.loadAll();
+    this.loadLocations().then((results) => {
+			this.loadAll();
+    })
+  }
+
+  loadLocations(): Promise<any> {
+    return this.serviceLocation.getAll()
+    .toPromise()
+    .then((results) => {
+			this.locations = results;
+    })
+    .catch((error) => {
+      this.serverError(error);
+    });
   }
 
   loadAll(): Promise<any> {
     let tempList = [];
+
+    this.loadLocations();
+
     return this.serviceShippingContainer.getAll()
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       result.forEach(asset => {
+        this.locations.forEach(function(element) {
+          console.log(element);
+          if (asset.currentLocation.toString().split("#")[1] === element.GLN) {
+            asset.locationText = element.GLN + " (" + element.address + ")";
+          }
+        });
+
+        asset.packagesText = this.setPackagesText(asset.packages);
+
         tempList.push(asset);
       });
       this.allAssets = tempList;
     })
     .catch((error) => {
-        if(error == 'Server error'){
-            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-        }
-        else if(error == '404 - Not Found'){
-				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
-        }
-        else{
-            this.errorMessage = error;
-        }
+      this.serverError(error);
     });
+  }
+
+  setPackagesText(packages): string {
+    var packagesText = '';
+
+    packages.forEach(function(element) {
+      if (packagesText !== '') {
+        packagesText = packagesText + ",";
+      }
+      packagesText = packagesText + element.toString().split("#")[1];
+    });
+    return packagesText;
+  }
+
+  serverError(error): void {
+    if(error == 'Server error'){
+      this.errorMessage = "Could not connect to REST server. Please check your configuration details";
+    }
+    else if(error == '404 - Not Found'){
+    this.errorMessage = "404 - Could not find API route. Please check your available APIs."
+    }
+    else{
+        this.errorMessage = error;
+    }
   }
 
 	/**
@@ -122,51 +136,15 @@ export class ShippingContainerComponent implements OnInit {
   addAsset(form: any): Promise<any> {
     this.asset = {
       $class: "org.e599.model.ShippingContainer",
-      
-        
           "SSCC":this.SSCC.value,
-        
-      
-        
-          "GTIN":this.GTIN.value,
-        
-      
-        
           "currentLocation":this.currentLocation.value,
-        
-      
-        
-          "packages":this.packages.value,
-        
-      
-        
-          "product":this.product.value
-        
-      
+          "packages":this.packages.value
     };
 
     this.myForm.setValue({
-      
-        
           "SSCC":null,
-        
-      
-        
-          "GTIN":null,
-        
-      
-        
           "currentLocation":null,
-        
-      
-        
-          "packages":null,
-        
-      
-        
-          "product":null
-        
-      
+          "packages":null
     });
 
     return this.serviceShippingContainer.addAsset(this.asset)
@@ -174,27 +152,9 @@ export class ShippingContainerComponent implements OnInit {
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
-      
-        
           "SSCC":null,
-        
-      
-        
-          "GTIN":null,
-        
-      
-        
           "currentLocation":null,
-        
-      
-        
-          "packages":null,
-        
-      
-        
-          "product":null 
-        
-      
+          "packages":null
       });
     })
     .catch((error) => {
@@ -211,38 +171,12 @@ export class ShippingContainerComponent implements OnInit {
    updateAsset(form: any): Promise<any> {
     this.asset = {
       $class: "org.e599.model.ShippingContainer",
-      
-        
-          
-        
-    
-        
-          
-            "GTIN":this.GTIN.value,
-          
-        
-    
-        
-          
             "currentLocation":this.currentLocation.value,
-          
-        
-    
-        
-          
             "packages":this.packages.value,
-          
-        
-    
-        
-          
-            "product":this.product.value
-          
-        
-    
-    };
+            "packagesText": this.setPackagesText(this.packages)
+      };
 
-    return this.serviceShippingContainer.updateAsset(form.get("SSCC").value,this.asset)
+    return this.serviceShippingContainer.updateAsset(form.get("SSCC").value, this.asset)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -252,27 +186,6 @@ export class ShippingContainerComponent implements OnInit {
 				this.errorMessage = "Could not connect to REST server. Please check your configuration details";
 			}
             else if(error == '404 - Not Found'){
-				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
-			}
-			else{
-				this.errorMessage = error;
-			}
-    });
-  }
-
-
-  deleteAsset(): Promise<any> {
-
-    return this.serviceShippingContainer.deleteAsset(this.currentId)
-		.toPromise()
-		.then(() => {
-			this.errorMessage = null;
-		})
-		.catch((error) => {
-            if(error == 'Server error'){
-				this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-			}
-			else if(error == '404 - Not Found'){
 				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
 			}
 			else{
@@ -292,75 +205,31 @@ export class ShippingContainerComponent implements OnInit {
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
-        
-          
             "SSCC":null,
-          
-        
-          
-            "GTIN":null,
-          
-        
-          
             "currentLocation":null,
-          
-        
-          
-            "packages":null,
-          
-        
-          
-            "product":null 
-          
-        
+            "packagesText":null,
+            "packages": null
       };
 
-
-
-      
         if(result.SSCC){
-          
             formObject.SSCC = result.SSCC;
-          
         }else{
           formObject.SSCC = null;
         }
       
-        if(result.GTIN){
-          
-            formObject.GTIN = result.GTIN;
-          
-        }else{
-          formObject.GTIN = null;
-        }
-      
         if(result.currentLocation){
-          
             formObject.currentLocation = result.currentLocation;
-          
         }else{
           formObject.currentLocation = null;
         }
       
         if(result.packages){
-          
-            formObject.packages = result.packages;
-          
+            formObject.packagesText = this.setPackagesText(result.packages);
         }else{
-          formObject.packages = null;
+          formObject.packagesText = null;
         }
       
-        if(result.product){
-          
-            formObject.product = result.product;
-          
-        }else{
-          formObject.product = null;
-        }
-      
-
       this.myForm.setValue(formObject);
-
     })
     .catch((error) => {
         if(error == 'Server error'){
@@ -378,27 +247,9 @@ export class ShippingContainerComponent implements OnInit {
 
   resetForm(): void{
     this.myForm.setValue({
-      
-        
           "SSCC":null,
-        
-      
-        
-          "GTIN":null,
-        
-      
-        
           "currentLocation":null,
-        
-      
-        
-          "packages":null,
-        
-      
-        
-          "product":null 
-        
-      
+          "packages":null
       });
   }
 
