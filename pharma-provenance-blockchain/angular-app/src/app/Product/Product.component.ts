@@ -17,36 +17,15 @@ export class ProductComponent implements OnInit {
   private currentId;
 	private errorMessage;
 
-  
-      
           productId = new FormControl("", Validators.required);
-        
-  
-      
           productName = new FormControl("", Validators.required);
-        
-  
-      
           manufacturer = new FormControl("", Validators.required);
         
-  
-
-
   constructor(private serviceProduct:ProductService, fb: FormBuilder) {
     this.myForm = fb.group({
-    
-        
           productId:this.productId,
-        
-    
-        
           productName:this.productName,
-        
-    
-        
           manufacturer:this.manufacturer
-        
-    
     });
   };
 
@@ -106,35 +85,15 @@ export class ProductComponent implements OnInit {
   addAsset(form: any): Promise<any> {
     this.asset = {
       $class: "org.e599.model.Product",
-      
-        
           "productId":this.productId.value,
-        
-      
-        
           "productName":this.productName.value,
-        
-      
-        
           "manufacturer":this.manufacturer.value
-        
-      
     };
 
     this.myForm.setValue({
-      
-        
           "productId":null,
-        
-      
-        
           "productName":null,
-        
-      
-        
           "manufacturer":null
-        
-      
     });
 
     return this.serviceProduct.addAsset(this.asset)
@@ -142,19 +101,9 @@ export class ProductComponent implements OnInit {
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
-      
-        
           "productId":null,
-        
-      
-        
           "productName":null,
-        
-      
-        
-          "manufacturer":null 
-        
-      
+          "manufacturer":null
       });
     })
     .catch((error) => {

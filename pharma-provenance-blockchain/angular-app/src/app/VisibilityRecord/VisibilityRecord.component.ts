@@ -59,7 +59,7 @@ export class VisibilityRecordComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loadAll();
+    //this.loadAll();
   }
 
   loadPartner(id: string): Promise<any> {

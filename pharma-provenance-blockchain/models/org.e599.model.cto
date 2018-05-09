@@ -88,6 +88,7 @@ transaction UnpackTransaction {
     --> ShippingContainer container
     --> IndividualPackage[] contents optional /* for unpacking specific items */
     --> Location readPoint
+    o DateTime eventTime optional
 }
 
 /**
@@ -96,6 +97,7 @@ transaction UnpackTransaction {
 transaction ShipTransaction {
     --> ShippingContainer container
     --> Location readPoint
+    o DateTime eventTime optional
 }
 
 /**
@@ -104,6 +106,7 @@ transaction ShipTransaction {
 transaction ReceiveTransaction {
     --> ShippingContainer container
     --> Location readPoint
+    o DateTime eventTime optional
 }
 
 event VisibilityEvent {

@@ -7,13 +7,9 @@ import 'rxjs/Rx';
 // Can be injected into a constructor
 @Injectable()
 export class VisibilityRecordService {
-
 	
 		private NAMESPACE: string = 'VisibilityRecord';
 	
-
-
-
     constructor(private dataService: DataService<VisibilityRecord>) {
     };
 

@@ -7,20 +7,10 @@
       </div>
       <form [formGroup]="myForm">
         <div class="modal-body">
-
-
-          
-
-            
               <div class="form-group text-left">
                 <label for="productId">productId</label>
-                
                   <input formControlName="productId" type="text" class="form-control">
-                
               </div>
-            
-          
-
             
               <div class="form-group text-left">
                 <label for="productName">productName</label>
@@ -29,18 +19,11 @@
                 
               </div>
             
-          
-
-            
               <div class="form-group text-left">
                 <label for="manufacturer">manufacturer</label>
-                
                     <textarea formControlName="manufacturer" class="form-control" rows="3"></textarea>
-                
               </div>
             
-          
-
         </div>
         <div class="modal-footer">
           <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
@@ -50,8 +33,6 @@
     </div>
   </div>
 </div>
-
-
 
 
 <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
@@ -64,35 +45,19 @@
       <form [formGroup]="myForm">
         <div class="modal-body">
 
-
-          
             <div class="form-group text-left">
               <label for="productId">productId</label>
-
-              
                 <input [ngModel]="productId"formControlName="productId" type="text" class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
               <label for="productName">productName</label>
-
-              
                 <input [ngModel]="productName"formControlName="productName" type="text" class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
               <label for="manufacturer">manufacturer</label>
-
-              
-                
                   <textarea [ngModel]="manufacturer" formControlName="manufacturer" class="form-control" rows="3"></textarea>
-                
-              
-
             </div>
           
 
@@ -150,6 +115,7 @@
     </div>
   </div>
   <br>
+  
   <div class="row">
     <div class="col-md-12">
       <table class="table table-bordered table-responsive table-striped">

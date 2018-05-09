@@ -115,10 +115,14 @@
     </div>
   </div>
 
-  <div *ngIf="loaded" class="row sgtin-container">
-      <div class="col-md-12">
-          <h3>Pedigree Results for SGTIN: {{this.package.SGTIN}}</h3>
+  <div *ngIf="loaded" style="margin-top:10px;border-top: 1px solid #999">
+  <h2>Pedigree Results for SGTIN: {{this.package.SGTIN}}</h2>
+ </div>
 
+  <div *ngIf="loaded" class="row sgtin-container">
+
+      <div class="col-md-12">
+          <h3>Product Details</h3>
           <div class="row">
               <div class="col-md-6">
                   <h4>Trade Item</h4>
@@ -142,7 +146,10 @@
                     <label>Batch ID: </label> {{this.batch.batchId}}
                 </div>
                 <div>
-                    <label>Date: </label> {{this.batch.batchDate}}
+                    <label>Batch Date: </label> {{this.batch.batchDate}}
+                </div>
+                <div>
+                    <label>Expiration Date: </label> {{this.batch.expirationDate}}
                 </div>
                 <div>
                     <label>Location: </label> {{this.batchLocation.address}} 
@@ -161,28 +168,32 @@
       <table class="table table-bordered table-responsive table-striped">
         <thead class="thead">
           <tr class="thead-cols">
-                <th class="info">GLN</th>
-                <th class="info">SSCC</th>
-                <th class="info">GTIN</th>
                 <th class="info">Read Location</th>
+                <th class="info">Event</th>
+                <th class="info">Container</th>
                 <th class="info">Product</th>
-                <th class="info">Count</th>
-                <th class="info">Business Step</th>
                 <th class="info">Event Time</th>
                 <th class="info">Units / Details</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let asset of allAssets">
-                <td>{{asset.GLN}}</td>
-                <td>{{asset.SSCC}}</td>
-                <td>{{asset.GTIN}}</td>
-                <td>{{asset.locationText}}</td>
-                <td>{{asset.productText}}</td>
-                <td>{{asset.SGTINs.length}}</td>
+                <td>
+                  GLN: {{asset.GLN}} <br>
+                  {{asset.supplyChainPartnerText}} <br>
+                  {{asset.locationText}}
+                </td>
+
                 <td>{{asset.businessStep}}</td>
+                <td>
+                  SSCC: {{asset.SSCC}}<br>
+                  Package count: {{asset.SGTINs.length}}
+                </td>
+                <td>
+                    <span *ngIf="asset.GTIN">GTIN:</span> {{asset.GTIN}} <BR>
+                    {{asset.productText}}
+                </td>
                 <td>{{asset.eventTime}}</td>
-            
 
             <td>
               
@@ -192,10 +203,11 @@
               -->
             </td>
             
-
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+
 </div>

@@ -56,7 +56,9 @@ function unpackContainer(transaction) {
     record.businessStep = 'Unpacking';
     record.action = "DELETE";
     record.disposition = "in_progress";
-    record.eventTime = transaction.timestamp;
+    record.eventTime = (transaction.eventTime) ? 
+        transaction.eventTime :
+        transaction.timestamp;
     record.locationText = transaction.container.currentLocation.address;
     record.supplyChainPartnerText = transaction.readPoint.company.companyName;
 
@@ -132,7 +134,9 @@ function shipPackage(shipTransaction) {
     record.businessStep = 'Shipping';
     record.action = "OBSERVE";
     record.disposition = "in_transit";
-    record.eventTime = shipTransaction.timestamp;
+    record.eventTime = (shipTransaction.eventTime) ? 
+        shipTransaction.eventTime :
+        shipTransaction.timestamp;
     record.locationText = shipTransaction.readPoint.address;
     record.supplyChainPartnerText = shipTransaction.readPoint.company.companyName;
 
@@ -171,7 +175,9 @@ function receivePackage(receiveTransaction) {
     record.action = "OBSERVE";
     record.disposition = "in_process";
     record.locationText = receiveTransaction.readPoint.address;
-    record.eventTime = receiveTransaction.timestamp;
+    record.eventTime = (receiveTransaction.eventTime) ? 
+        receiveTransaction.eventTime :
+        receiveTransaction.timestamp;
     record.supplyChainPartnerText = receiveTransaction.readPoint.company.companyName;
 
     getChildData(receiveTransaction.container, record);
